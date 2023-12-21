@@ -1,4 +1,4 @@
-"ID","Name","Form","Type1","Type2","Total","HP","Attack","Defense","Sp. Atk","Sp. Def","Speed","Generation"
+"ID","Name","Form","Type1","Type2","Total","HP","Attack","Defense","Sp. Atk","Sp. Def","Speed","Generation","Can Evolve"
 128,"Tauros","Combat Breed","Fighting"," ",490,75,110,105,30,70,100,9,False
 128,"Tauros","Blaze Breed","Fighting","Fire",490,75,110,105,30,70,100,9,False
 128,"Tauros","Aqua Breed","Fighting","Water",490,75,110,105,30,70,100,9,False

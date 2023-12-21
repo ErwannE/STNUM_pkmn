@@ -1,4 +1,4 @@
-"ID","Name","Form","Type1","Type2","Total","HP","Attack","Defense","Sp. Atk","Sp. Def","Speed","Generation"
+"ID","Name","Form","Type1","Type2","Total","HP","Attack","Defense","Sp. Atk","Sp. Def","Speed","Generation","Can Evolve"
 52,"Meowth","Galarian Meowth","Steel"," ",290,50,65,55,40,40,40,8,True
 58,"Growlithe","Hisuian Growlithe","Fire","Rock",350,60,75,45,65,50,55,8,True
 59,"Arcanine","Hisuian Arcanine","Fire","Rock",555,95,115,80,95,80,90,8,False
