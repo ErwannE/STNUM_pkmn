@@ -1,3 +1,6 @@
 A faire pour le 22 décembre: 
 - Introduction et présentation de problématique
 - Analyse descriptive de données (ACP, ACM, clustering...)
+
+Les fichiers de données dans le dossier stats_pokemons contiennent les caractéristiques des pokémons (type, attaque, défense, vitesse, HP...).
+Les fichiers de données dans le dossier usage contiennent les statistiques d'usage des pokémons (nombre de fois où ils ont été utilisés, nombre de fois où ils ont été vainqueurs...).
