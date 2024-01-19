@@ -30,3 +30,6 @@ def refresh_database_json():
         print(doc + " has been updated")
 
 refresh_database_csv()
+
+def full_refresh(): #Refresh all the database
+    refresh_database_csv()
