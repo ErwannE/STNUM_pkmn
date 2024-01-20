@@ -1,4 +1,4 @@
-"ID","Name","Form","Type1","Type2","Total","HP","Attack","Defense","Sp. Atk","Sp. Def","Speed","Generation","Can Evolve"
+"ID","Name","Form","Type1","Type2","Total","HP","Attack","Defense","Sp. Atk","Sp. Def","Speed","Generation","Can_Evolve"
 152,"Chikorita"," ","Grass"," ",318,45,49,65,49,65,45,2,True
 153,"Bayleef"," ","Grass"," ",405,60,62,80,63,80,60,2,True
 154,"Meganium"," ","Grass"," ",525,80,82,100,83,100,80,2,False
