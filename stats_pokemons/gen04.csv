@@ -1,4 +1,4 @@
-"ID","Name","Form","Type1","Type2","Total","HP","Attack","Defense","Sp. Atk","Sp. Def","Speed","Generation","Can Evolve"
+"ID","Name","Form","Type1","Type2","Total","HP","Attack","Defense","Sp. Atk","Sp. Def","Speed","Generation","Can_Evolve"
 387,"Turtwig"," ","Grass"," ",318,55,68,64,45,55,31,4,True
 388,"Grotle"," ","Grass"," ",405,75,89,85,55,65,36,4,True
 389,"Torterra"," ","Grass","Ground",525,95,109,105,75,85,56,4,False

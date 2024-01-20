@@ -1,4 +1,4 @@
-"ID","Name","Form","Type1","Type2","Total","HP","Attack","Defense","Sp. Atk","Sp. Def","Speed","Generation","Can Evolve"
+"ID","Name","Form","Type1","Type2","Total","HP","Attack","Defense","Sp. Atk","Sp. Def","Speed","Generation","Can_Evolve"
 252,"Treecko"," ","Grass"," ",310,40,45,35,65,55,70,3,True
 253,"Grovyle"," ","Grass"," ",405,50,65,45,85,65,95,3,True
 254,"Sceptile"," ","Grass"," ",530,70,85,65,105,85,120,3,False

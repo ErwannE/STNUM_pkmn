@@ -1,4 +1,4 @@
-"ID","Name","Form","Type1","Type2","Total","HP","Attack","Defense","Sp. Atk","Sp. Def","Speed","Generation","Can Evolve"
+"ID","Name","Form","Type1","Type2","Total","HP","Attack","Defense","Sp. Atk","Sp. Def","Speed","Generation","Can_Evolve"
 494,"Victini"," ","Psychic","Fire",600,100,100,100,100,100,100,5,False
 495,"Snivy"," ","Grass"," ",308,45,45,55,45,55,63,5,True
 496,"Servine"," ","Grass"," ",413,60,60,75,60,75,83,5,True
