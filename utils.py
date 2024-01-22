@@ -31,5 +31,5 @@ def plot_average_attributes(list_names):
     plt.show()
 
 
-# Call the function to display the plot
-plot_average_attributes(["Pikachu", "Charmander", "Squirtle", "Bulbasaur", "Charizard", "Blastoise", "Venusaur"])
+# Call the f unction to display the plot
+#plot_average_attributes(["Pikachu", "Charmander", "Squirtle", "Bulbasaur", "Charizard", "Blastoise", "Venusaur"])
