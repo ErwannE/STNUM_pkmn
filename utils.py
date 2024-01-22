@@ -18,11 +18,11 @@ def plot_average_attributes(list_names, attributes=["Attack", "Defense", "Sp. At
     # Calculate the average of the attributes
     average_attributes = pokemon_df[attributes].mean()
 
-    # Divide all values in the ""Total" column by 6
-    average_attributes["Total"] /= 6
-
-    # Change the index "Total" to "Mean"
-    average_attributes.rename(index={"Total": "Mean"}, inplace=True)
+    if "Total" in attributes:
+        # Divide all values in the ""Total" column by 6
+        average_attributes["Total"] /= 6
+        # Change the index "Total" to "Mean"
+        average_attributes.rename(index={"Total": "Mean"}, inplace=True)
 
     # Plot the average attributes using a bar chart
     plt.bar(average_attributes.index, average_attributes.values)
