@@ -2,12 +2,11 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import sqlite3
 
-def get_attributes_by_names(list_names, attributes=["Attack", "Defense", "Sp. Atk", "Sp. Def", "HP", "Speed", "Total"]): # list_names is a list of strings
+def get_attributes_by_names(list_names, attributes=["Attack", "Defense", "Sp. Atk", "Sp. Def", "HP", "Speed", "Total"]): # Returns a DataFrame containing the attributes of the pokemons in list_names
     conn = sqlite3.connect('STNUM_pokemon.db')
     names = ', '.join([f'"{name}"' for name in list_names])
     str_attributes = ', '.join([f'"{attribute}"' for attribute in attributes])
     request = f'SELECT {str_attributes} FROM Pokemon WHERE Name IN ({names})'
-    print(request)
     result = pd.read_sql(request, conn)
     return result
 
