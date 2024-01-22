@@ -11,7 +11,7 @@ def get_attributes_by_names(list_names, attributes=["Attack", "Defense", "Sp. At
     return result
 
 
-def plot_average_attributes(list_names, attributes=["Attack", "Defense", "Sp. Atk", "Sp. Def", "HP", "Speed", "Total"]):
+def plot_average_attributes(list_names, attributes=["Attack", "Defense", "Sp. Atk", "Sp. Def", "HP", "Speed", "Total"], fixed_axis=True):
     # Assuming you have already connected to the database and retrieved the Pokemon table as a pandas DataFrame
     pokemon_df = get_attributes_by_names(list_names, attributes)
 
@@ -27,6 +27,8 @@ def plot_average_attributes(list_names, attributes=["Attack", "Defense", "Sp. At
     # Plot the average attributes using a bar chart
     plt.bar(average_attributes.index, average_attributes.values)
     plt.xlabel("Attributes")
+    if fixed_axis:
+        plt.ylim(0, 180)
     plt.ylabel("Average Value")
     plt.title("Average Attributes of Pokemon")
     plt.show()

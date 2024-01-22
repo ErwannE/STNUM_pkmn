@@ -78,7 +78,8 @@
         \vspace{1.2cm}
     \end{center}
 \end{titlepage}
-
+\tableofcontents
+\newpage
 \section{Introduction}
 La série de jeux Pokémon, créée par Game Freak et éditée par Nintendo, a débuté
 en 1996 avec les jeux Pokémon Rouge et Vert au Japon, avant de conquérir le
@@ -101,8 +102,12 @@ augmenter la "puissance" des nouveaux pokémons afin de leur donner un interêt
 par rapport aux anciens : ce phénomène d'augmentation de la "puissance" des
 pokémons (en moyenne) est nommé powercreep. Ce phénomène est dénoncé par
 certains joueurs, qui voient leurs pokémons favoris devenir plus obcelète de
-génération en génération. C'est ce phénomène de powercreep qui est au coeur de
-notre étude.
+génération en génération. 
+
+Ce phénomène de powercreep est au coeur de notre projet. Nous allons chercher à
+déterminer quels changements ont eu lieu dans le design des nouveaux pokémons au
+fil des générations, et dans quel mesure ces changements peuvent expliquer le
+phénomène de powercreep.
 
 \begin{figure}[!h]
     \centering
@@ -239,7 +244,7 @@ Notons que certaines données influant rarement sur les combats, comme le sexe
 des pokémons ou leur poids, ne seront pas pris en compte, car leur influence sur
 la viabilité d'un pokémon est négligeable.
 
-\subsection{Description du jeu de donnée}
+\subsection{Présentation du jeu de donnée}
 Le tableau \textit{Pokemon.csv} contient, pour chaque pokémon, ses statistiques,
 ses types, sa génération d'origine et un attribut "Can Evolve", qui indique si
 le pokémon peut encore évoluer ou non (les pokémons utilisés en compétitions
@@ -280,6 +285,11 @@ fera les deux approximations suivantes :
     de parties jouées est de l'ordre du million, on peut considérer que toutes
     les capacités "utiles" des pokémons ont été utilisées au moins une fois)
 \end{itemize}
+
+\section{Description des données}
+
+\section{Analyse exploratoire des données}
+
 
 \section{Analyse des données}
 
