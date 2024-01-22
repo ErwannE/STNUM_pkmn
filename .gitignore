@@ -6,3 +6,5 @@ rapport/main.out
 rapport/main.synctex.gz
 rapport/main.pdf
 STNUM_pokemon.db
+STNUM_pokemon.db-journal
+__pycache__/
