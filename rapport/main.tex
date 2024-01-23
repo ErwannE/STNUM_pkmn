@@ -38,6 +38,9 @@
 %Separation des colonnes
 \setlength{\columnsep}{2cm}
 
+%Commentaire sur plusieurs lignes
+\usepackage{verbatim}
+
 %Avoir des entêtes et pieds de page stylés
 \usepackage{fancyhdr}
 \pagestyle{fancy}
@@ -285,11 +288,18 @@ fera les deux approximations suivantes :
     de parties jouées est de l'ordre du million, on peut considérer que toutes
     les capacités "utiles" des pokémons ont été utilisées au moins une fois)
 \end{itemize}
-
-\section{Description des données}
-
-\section{Analyse exploratoire des données}
-
+\section{Description et analyse exploratoire des données}
+\subsection{Réduction de la dimentionnalité}
+\subsubsection{Réduction de la dimentionnalité sur les statistiques}
+ Comme nous l'avons vu précédemment, les données associées sont à la fois des
+données quantitatives (statistiques) et qualitatives (types, capacités,
+talents). La réduction de dimentionnalité ne serait pas pertinentes pour les
+données qualitatives, car les pokémons sont très différents entre eux en terme
+de statistiques.
+\subsubsection{Réduction de la dimentionnalité sur les types et les capacités}
+Test
+\subsection{Clustering des pokémons}
+Test
 
 \section{Analyse des données}
 
@@ -373,5 +383,21 @@ de \textit{metagame}, mécaniques spécifiques à certaines générations, objet
 et chercher à construire un outil prédictif pour créer de nouveaux pokémons à
 partir de statistiques, de types...
 
+
+\section{TRAVAIL A FAIRE}
+
+\begin{itemize}
+    \item Clustering sur les pokémons par rapport à leurs statistiques. On
+    calcul l'usage moyen par Cluster, calculer l'appartenance des poké OU aux
+    cluster
+    \item Réduction de dimension sur les attaques : voir quels types d'attaques
+    vont bien ensemble
+    \item Réduction de dimension sur les stats et les types : montrer que c'est
+    pas très utile
+    \item Correlation statistiques-usage : pas que les statistiques qui influent
+    sur la viabilité
+    \item Evolution moyenne et variance par génération : Montrer qu'il y a une
+    spécialisation
+\end{itemize}
 
 \end{document}
