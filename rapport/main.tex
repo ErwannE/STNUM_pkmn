@@ -70,14 +70,18 @@
         \vspace{0.7cm}
         {\Large ÉCOLE NATIONALE DES PONTS ET CHAUSSÉES}\\
         \vspace{1cm}
-        \rule\linewidth{0.05cm} {\huge Nom du document \par}
-        \rule\linewidth{0.05cm}
+        \rule\linewidth{0.05cm} {\huge Caractérisation du powercreep des jeux
+        vidéo Pokémon \par} \rule\linewidth{0.05cm}
         \vspace{1cm}
-        {\Large COURS \par}
+        {\Large Statistiques numériques et analyse de données \par}
         \vspace{0.8cm}
         {\Large Par}\\
         \vspace{0.3cm}
+        {\large \textit{DREVET Matthieu}}\\
         {\large \textit{ESTEVE Erwann}}\\
+        {\large \textit{GOURGUE François}}\\
+        {\large \textit{MALGAT Étienne}}\\
+        {\large \textit{POLO Tidiane}}\\
         \vspace{1.2cm}
     \end{center}
 \end{titlepage}
@@ -290,12 +294,53 @@ fera les deux approximations suivantes :
 \end{itemize}
 \section{Description et analyse exploratoire des données}
 \subsection{Réduction de la dimentionnalité}
-\subsubsection{Réduction de la dimentionnalité sur les statistiques}
- Comme nous l'avons vu précédemment, les données associées sont à la fois des
+Comme nous l'avons vu précédemment, les données associées sont à la fois des
 données quantitatives (statistiques) et qualitatives (types, capacités,
-talents). La réduction de dimentionnalité ne serait pas pertinentes pour les
-données qualitatives, car les pokémons sont très différents entre eux en terme
-de statistiques.
+talents). Nous avons choisi de réduire la dimentionnalité des données à l'aide
+des méthodes d'analyse en composantes principales et d'analyse des composantes
+multiples.
+\subsubsection{Réduction de la dimentionnalité sur les statistiques}
+Les statistiques d'un pokémon sont des données quantitatives, nous pouvons donc
+appliquer une Analyse en Composantes Principales classique. Notons que notre
+espace d'origine comprend 6 dimensions pour les 6 statistiques d'un pokémon (HP,
+Attaque, Défense, Attaque Spéciale, Défense Spéciale et Vitesse). Les figures
+ci-dessous contiennent des informations obtenues à partir de l'ACP :
+
+\begin{figure}[htbp]
+    \centering
+    \begin{minipage}[b]{0.45\textwidth}
+        \includegraphics[width=\textwidth]{Image/explained_variation_PCA.png}
+        \caption{Valeurs propres associées aux vecteurs propres de l'ACP}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[b]{0.45\textwidth}
+        \includegraphics[width=\textwidth]{Image/mean_vector_PCA.png}
+        \caption{Vecteur moyen (moyenne de chaque statistique)}
+    \end{minipage}
+    
+    \vspace{0.5cm}
+    
+    \includegraphics[width=0.9\textwidth]{Image/eigen_vector_PCA.png}
+    \caption{Vecteur propre de l'ACP}
+\end{figure}
+
+On constate qu'il n'est pas vraiment pertinent de réduire la dimentionnalité des
+statistiques : en effet, la Figure 4 ne permet pas de distinguer un "angle" sur
+la courbe des valeurs prores, qui se situe en général à la dimension à partir
+desquels la perte d'information par dimension réduite est importante. Cela
+s'explique facilement par le fait que les 6 statistiques sont fortement
+indépendantes entre les pokémons : s'il peut exister certains "patterns" dans
+les répartitions de statistiques (voir la partie concernant le Clustering), il
+n'y a pas de correlations systématiques entre les catégories de statistique. \\
+On peut tout de même remarquer au sein des vecteurs propres (Figure 6) des
+habitudes de design :
+\begin{itemize}
+    \item Les vecteurs 1 et 3 montrent une tendance qu'ont les pokémons ayant
+    une forte défense à avoir une faible défense spéciale, tandis que les
+    pokémons ayant une statistique importante d'attaque tendent à avoir des
+    statistiques spéciales (Sp. Atk, Sp. Def) faibles.
+    \item Le vecteur 2 montre des composantes positives dans toutes les statistiques sauf en vitesse (qui est quasi nulle) : la composante selon ce vecteur des pokémons dit "légendaires", qui ont de très hautes statistique en général, sauf leur vitesse qui est souvent moyenne, doit être importante.
+\end{itemize}
 \subsubsection{Réduction de la dimentionnalité sur les types et les capacités}
 Test
 \subsection{Clustering des pokémons}
