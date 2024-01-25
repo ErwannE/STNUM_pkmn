@@ -136,12 +136,12 @@ def labellize_clusters(clusters, df):
     mapping = {}
     for i in range(len(clusters)):
         print('Cluster ' + str(i) + ':', clusters[i])
-        plot_average_attributes(clusters[i])
         print('Give a label to this cluster:')
+        plot_average_attributes(clusters[i])
         cluster_label = input()
         mapping[i] = cluster_label
     df['Cluster_label'] = [mapping[i] for i in df['cluster_number']]
-    return df
+    return df, mapping
 
 # TO DO LIST
 # % of pokemon used in the cluster
@@ -181,27 +181,68 @@ def add_BST_to_df(mean_BST,df):
     df['Mean_BST'] = mean_BST['Total']
     return df
 
+def part_poke_in_cluster_by_gen(stats,clusters,mapping):
+    n_clusters = len(clusters)
+    res_array = np.zeros((9, 1 + n_clusters)) # lignes : générations. colonnes : numéro génération + clusters
+    # filling the array
+    # generation column
+    for k_gen in range(9):
+        res_array[k_gen,0] = k_gen+1
+    # counting the pokemon in each gen in each cluster
+    for k_cluster in range(n_clusters): 
+        for name in clusters[k_cluster]: # going through each cluster
+            res_array[stats.loc[name]['Generation']-1,1+k_cluster]+=1
+    # Dividing by the number of pokemon used in the generation
+    for i in range(res_array.shape[0]):
+        n_poke_in_gen = (sum(res_array[i])-res_array[i,0])
+        for j in range(1,1+n_clusters): # shouldn't include the generation column
+            res_array[i,j] /= n_poke_in_gen
+    # conversion en dataframe
+    res_df = pd.DataFrame(res_array, columns = ['Generation'] + [mapping[i] for i in range(n_clusters)])
+    res_df.index = res_df['Generation']
+    res_df = res_df.drop('Generation', axis = 1)
+    return res_df
+
+def plot_clusters_gen(gen_summary,gens_list,fixed_axis=True):
+    for i in gens_list:
+        plt.bar(gen_summary.columns.values, gen_summary.loc[i].values)
+        plt.xticks(gen_summary.columns.values, rotation='vertical')
+        plt.xlabel("Clusters",fontsize=8)
+        if fixed_axis:
+            plt.ylim(0, 0.3)
+        plt.ylabel("Part of Pokemon")
+        plt.title("Repartition in clusters for gen " + str(i))
+        plt.show()
+
 def main(list_gens, mode):
+    # Import stats Data
     stats_gen = import_stats()
     print(stats_gen.head())
+    # Compute clusters
     df_clusters, clusters = calc_clusters_gen(list_gens, stats_gen, mode)
-    df_clusters = labellize_clusters(clusters,df_clusters)
+    # Labellize clusters
+    df_clusters, mapping = labellize_clusters(clusters,df_clusters)
+    print(df_clusters)
+    # Import usage data
     df_usage = import_usage()
+    # Add the clusters label to iy
     df_usage = add_cluster_to_df(df_clusters,df_usage)
+    # Create the summary, containing mean usage in the cluster, % of pokemon actually used in it, and the mean BST of the pokemon
     mean_usage = mean_usage_by_cluster(df_usage)
     add_percent_of_used(df_usage,df_clusters,mean_usage)
     stats_gen_clus = add_cluster_to_df(df_clusters,stats_gen)
     mean_BST = mean_BST_by_cluster(stats_gen_clus)
     clusters_summary = add_BST_to_df(mean_BST,mean_usage)
     clusters_summary = clusters_summary.sort_values(by='usage', ascending=True)
-    return clusters_summary
+    print('clusters_summary :', clusters_summary)
+    # Create the summary for each generation
+    # Contains the part of pokemon in each cluster for each generation
+    gen_summary = part_poke_in_cluster_by_gen(stats_gen, clusters, mapping)
+    plot_clusters_gen(gen_summary,[i for i in range(1,10)])
+    return gen_summary
+    # adding the mean of usage for each generation
+
+
+
 
 print(main([1,2,3,4,5,6,7,8,9],'HAC'))
-
-
-
-
-
-
-
-        
