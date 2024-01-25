@@ -2,7 +2,8 @@ import pandas as pd
 from sqlalchemy import create_engine
 import pandas as pd
 import matplotlib.pyplot as plt
-from table_correspondance import regenerate_moves_obtention_table
+from table_correspondance import regenerate_moves_obtention_table, regenerate_type_table, regenerate_binary_description_table
+
 
 
 def name_doc(document): #take a document.extention, return it's name without the extension
@@ -423,6 +424,6 @@ def full_refresh(): #Refresh all the database
     delete_pokemon_Tatsugiri('STNUM_Pokemon.db')
     delete_pokemon_zamazenta_gren_maushold('STNUM_Pokemon.db')
     delete_duplicate_pokemon('STNUM_Pokemon.db')
-    regenerate_moves_obtention_table()
+    regenerate_binary_description_table()
 
 full_refresh()
