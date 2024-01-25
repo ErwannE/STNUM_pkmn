@@ -36,3 +36,5 @@ def plot_average_attributes(list_names, attributes=["Attack", "Defense", "Sp. At
 
 # Call the f unction to display the plot
 #plot_average_attributes(["Pikachu", "Charmander", "Squirtle", "Bulbasaur", "Charizard", "Blastoise", "Venusaur"])
+    
+
