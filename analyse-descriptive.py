@@ -138,6 +138,16 @@ def evolution_mean_stats(stat, typing = ["Grass", "Fire", "Water", "Bug", "Norma
     df_stats_evolution = pd.read_sql(request, conn)
     return df_stats_evolution
 
+def plot_evolution_mean_stats(stat, typing = ["Grass", "Fire", "Water", "Bug", "Normal", "Poison", "Electric", "Ground", "Fairy", "Fighting", "Psychic", "Rock", "Ghost", "Ice", "Dragon", "Dark", "Steel", "Flying"]):
+    if type(typing) == str:
+        typing = [typing]
+    df = evolution_mean_stats(stat, typing)
+    plt.plot(df['Generation'], df['avg_stat'], 'o-')
+    plt.xlabel("Generation")
+    plt.ylabel("Average " + stat)
+    plt.title("Evolution of the average " + stat + " of pokemons through generations")
+    plt.show()
+
 def evolution_var_stats(stat, typing = ["Grass", "Fire", "Water", "Bug", "Normal", "Poison", "Electric", "Ground", "Fairy", "Fighting", "Psychic", "Rock", "Ghost", "Ice", "Dragon", "Dark", "Steel", "Flying"]):
     if type(typing) == str:
         typing = [typing]
@@ -152,7 +162,7 @@ def var_between_stats(typing = ["Grass", "Fire", "Water", "Bug", "Normal", "Pois
     if type(gen) == int:
         gen = [gen]
     conn = sqlite3.connect('STNUM_pokemon.db') #Outil permettant d'exploiter la base de donnée
-    request = 'SELECT "HP", "Attack", "Defense", "Sp. Atk", "Sp. Def", "Speed" FROM Pokemon WHERE (Type1 IN ("' + '", "'.join(typing) + '") OR Type2 IN ("' + '", "'.join(typing) + '")) AND Generation IN (' + ', '.join([str(g) for g in gen]) + ') AND "Can_Evolve" = 0'
+    request = 'SELECT "HP", "Attack", "Defense", "Sp. Atk", "Sp. Def", "Speed" FROM Pokemon JOIN Pokemons_usage ON Pokemon.Name=Pokemons_usage.name_pokemon WHERE (Type1 IN ("' + '", "'.join(typing) + '") OR Type2 IN ("' + '", "'.join(typing) + '")) AND Generation IN (' + ', '.join([str(g) for g in gen]) + ') AND "Can_Evolve" = 0'
     table_stats = pd.read_sql(request, conn)
     average_var = table_stats.var(axis=1).mean()
     return average_var
@@ -170,5 +180,35 @@ def plot_var_between_stats(typing = ["Grass", "Fire", "Water", "Bug", "Normal", 
     plt.title("Evolution of the average variance of stats through generations")
     plt.show()
 
+def evolution_usage_by_generation():
+    conn = sqlite3.connect('STNUM_pokemon.db') #Outil permettant d'exploiter la base de donnée
+    request = 'SELECT Generation, SUM(Usage) AS total_usage, COUNT(*) AS nombre_pokemon_utilise FROM Pokemon JOIN Pokemons_usage ON Pokemon.Name=Pokemons_usage.name_pokemon GROUP BY Generation ORDER BY Generation' 
+    df_stats_evolution = pd.read_sql(request, conn)
+    return df_stats_evolution
+
+def plot_evolution_usage_by_generation():
+    df = evolution_usage_by_generation()
+    plt.plot(df['Generation'], df['total_usage'], 'o-')
+    plt.xlabel("Generation")
+    plt.ylabel("Total Usage")
+    plt.title("Evolution of the total usage of pokemons through generations")
+    plt.show()
+
+def evolution_avg_usage_by_generation():
+    conn = sqlite3.connect('STNUM_pokemon.db') #Outil permettant d'exploiter la base de donnée
+    request = 'SELECT Generation, SUM(Usage) AS total_usage FROM Pokemon JOIN Pokemons_usage ON Pokemon.Name=Pokemons_usage.name_pokemon WHERE Can_Evolve=0 GROUP BY Generation ORDER BY Generation' 
+    df_stats_evolution = pd.read_sql(request, conn)
+    request2 = 'SELECT Generation, COUNT(*) AS nombre_pokemon_utilise FROM Pokemon JOIN Pokemons_usage ON Pokemon.Name=Pokemons_usage.name_pokemon WHERE Can_Evolve=0 GROUP BY Generation ORDER BY Generation'
+    df_stats_evolution2 = pd.read_sql(request2, conn)
+    df_stats_evolution['total_usage'] = df_stats_evolution['total_usage'] / df_stats_evolution2['nombre_pokemon_utilise']
+    return df_stats_evolution
+
+def plot_evolution_avg_usage_by_generation():
+    df = evolution_avg_usage_by_generation()
+    plt.plot(df['Generation'], df['total_usage'], 'o-')
+    plt.xlabel("Generation")
+    plt.ylabel("Average Usage")
+    plt.title("Evolution of the average usage of pokemons through generations")
+    plt.show()
+
 plot_var_between_stats()
-    
