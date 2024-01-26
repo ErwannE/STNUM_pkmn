@@ -134,7 +134,7 @@ def evolution_mean_stats(stat, typing = ["Grass", "Fire", "Water", "Bug", "Norma
     if type(typing) == str:
         typing = [typing]
     conn = sqlite3.connect('STNUM_pokemon.db') #Outil permettant d'exploiter la base de donnée
-    request = 'SELECT "Generation", AVG("' + stat + '") as avg_stat FROM Pokemon WHERE (Type1 IN ("' + '", "'.join(typing) + '") OR Type2 IN ("' + '", "'.join(typing) + '")) AND "Can_Evolve" = 0 GROUP BY "Generation"'
+    request = 'SELECT "Generation", AVG("' + stat + '") as avg_stat FROM Pokemon JOIN Pokemons_usage ON Pokemon.Name=Pokemons_usage.name_pokemon WHERE (Type1 IN ("' + '", "'.join(typing) + '") OR Type2 IN ("' + '", "'.join(typing) + '")) AND "Can_Evolve" = 0 GROUP BY "Generation"'
     df_stats_evolution = pd.read_sql(request, conn)
     return df_stats_evolution
 
@@ -211,4 +211,4 @@ def plot_evolution_avg_usage_by_generation():
     plt.title("Evolution of the average usage of pokemons through generations")
     plt.show()
 
-plot_var_between_stats()
+plot_evolution_mean_stats("Total")

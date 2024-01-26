@@ -123,7 +123,7 @@ phénomène de powercreep.
     incluant 120 nouveaux pokémons et de nombreux anciens. Ces jeux constituent
     la $9^{e}$ génération de la saga ($9^{e}$  jeux ajoutant de nouveaux
     pokémons.)}
-    \label{fig:image2}
+    \label{fig:image1}
 \end{figure}
 
 La première base de donnée décrit les différentes statistiques des pokémons
@@ -163,7 +163,7 @@ influent sur la viabilité d'un pokémon. 4 données sont en général retenues 
     \includegraphics[width=0.6\textwidth]{Image/dracaufeu_coup_critique.png}
     \caption{Page du site coupcritique.fr (site d'analyse stratégique), dédiée à
     Dracaufeu. On y retrouve immédiatement les données citées précédemment)}.
-    \label{fig:image1}
+    \label{fig:image2}
 \end{figure}
 
 Une explication rapide du déroulement d'une partie s'impose (certains points,
@@ -210,7 +210,7 @@ non essentiels à la compréhension, seront passés):
     l'adversaire. Ainsi, une capacité de type Feu infligera 2x plus de dégâts
     sur un pokémon de type Plante, tandis qu'elle infligera 2x moins de dégats
     sur un pokémon de type Eau.}.
-    \label{fig:image4}
+    \label{fig:image3}
 \end{figure}
 
 Les dégâts infligés par les attaques physiques ou spéciales sont calculés via la
@@ -293,6 +293,83 @@ fera les deux approximations suivantes :
     les capacités "utiles" des pokémons ont été utilisées au moins une fois)
 \end{itemize}
 \section{Description et analyse exploratoire des données}
+\subsection{Description des données}
+Avant de chercher à caractériser le powercreep, il est nécessaire de pouvoir
+prouver son existence. Pour cela, nous pouvons nous intéresser à l'évolution
+de l'usage des pokémons par génération. En effet, si le powercreep existe, on
+devrait observer une augmentation de l'usage des pokémons des générations les
+plus récentes. L'image ci-dessous représente l'évolution de l'usage moyen des pokémons
+par génération, en utilisant les données de \textit{gen9ou-0.json} :
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Image/avg_usage_by_generation.png}
+    \caption{Évolution de l'usage moyen des pokémons par génération}
+    \label{fig:image4}
+\end{figure}
+
+On constate que, s'il n'y a pas de net corrélation entre taux d'usage et
+génération lors des 7 premières générations, les générations 8 et 9 ont un taux
+d'usage moyen supérieur aux générations précédentes. On peut donc affirmer que
+le powercreep existe bien sur les dernières générations.\\
+N.B. : La baisse d'usage des pokémons de génération 6 et 7 par rapport aux
+générations précédentes s'explique par le fait que certains pokémons n'était pas
+encore disponible sur le simulateur/dans les jeux lorsque les données ont été
+collectées. En particulier, la génération 7 possède de nombreux pokémons qui
+auraient été joués, mais qui sont restés exclusif à leur jeu d'origine.
+
+
+Maintenant que nous avons vu que le phénomène de powercreep s'appliquait bien
+aux jeux pokémons, nous pouvons nous interesser à comment le design des pokémons
+a évolué pour provoquer ce power creep.
+
+La façon la plus simple qu'aurait Game Freak pour augmenter la puissance des
+pokémons des nouvelles générations par rapport aux anciennes serait d'augmenter
+le total de statistiques des nouveaux pokémons. En effet, les statistiques des
+pokémons sont les seuls données strictement "positive" pour un pokémon :  un
+type donnent les résistances mais aussi les faiblesses d'un pokémon, tandis que
+les talents sont très divers et donc parfois difficilement comparable (un talent
+améliore souvent certains aspects par rapport à d'autres).
+
+On peut donc s'interesser à l'évolution de la moyenne du total de statistique
+des pokémons par génération :
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Image/avg_total_per_generation.png}
+    \caption{Évolution du total de statistique moyen en fonction de la
+    génération}.
+    \label{fig:image5}
+\end{figure}
+
+On constate que le total de statistique moyen ne semble pas être la raison de
+l'augmentation d'usage des pokémons de dernière génération : les moyennes des
+génération 8 et 9 (qui, nous l'avons vu précédemment, ont introduit les pokémons
+les plus viables) sont semblables à celle des génération 4-5-6, dont les usages
+sont nettement plus bas.
+
+Une autre tendance interessante à vérifier concernant les statistiques des
+pokémons est l'évolution de la variance inter-statistique. En général, un
+pokémon ayant des statistiques très déséquilibrées (par exemple, un pokémon
+ayant des statistiques d'attaque et de vitesse très élevées et toutes les autres
+très faibles) sera plus viable qu'un pokémon ayant des statistiques plus
+lissées, car le premier pourra plus facilement se justifier un rôle au sein
+d'une équipe. On peut donc s'interesser à l'évolution de la moyenne sur les
+génération de la variance entre les 6 statistiques :
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Image/avg_var_stats_per_generation.png}
+    \caption{Évolution de la variance moyenne des statistiques en fonction de la
+    génération}.
+    \label{fig:image6}
+\end{figure}
+
+Une fois de plus, on ne peut expliquer le powercreep des dernières générations
+par cette donnée : en effet, les statistiques des pokémons originaires de la
+deuxième génération sont fortement déséquilibrées et pourtant, leurs usages sont
+parmis les plus bas. Il faut donc chercher la cause du powercreep sur d'autres
+aspects du design des pokémons.
+
 \subsection{Réduction de la dimentionnalité}
 Comme nous l'avons vu précédemment, les données associées sont à la fois des
 données quantitatives (statistiques) et qualitatives (types, capacités,
@@ -339,7 +416,10 @@ habitudes de design :
     une forte défense à avoir une faible défense spéciale, tandis que les
     pokémons ayant une statistique importante d'attaque tendent à avoir des
     statistiques spéciales (Sp. Atk, Sp. Def) faibles.
-    \item Le vecteur 2 montre des composantes positives dans toutes les statistiques sauf en vitesse (qui est quasi nulle) : la composante selon ce vecteur des pokémons dit "légendaires", qui ont de très hautes statistique en général, sauf leur vitesse qui est souvent moyenne, doit être importante.
+    \item Le vecteur 2 montre des composantes positives dans toutes les
+    statistiques sauf en vitesse (qui est quasi nulle) : la composante selon ce
+    vecteur des pokémons dit "légendaires", qui ont de très hautes statistique
+    en général, sauf leur vitesse qui est souvent moyenne, doit être importante.
 \end{itemize}
 \subsubsection{Réduction de la dimentionnalité sur les types et les capacités}
 Test
@@ -360,17 +440,6 @@ génération et 1 provient de la première génération. Les générations ajout
 peu près toutes le même nombre de pokémon, on constate que les nouveaux pokémons
 sont souvent plus viables que les anciens.
 
-Maintenant que nous avons vu que le phénomène de powercreep s'appliquait bien
-aux jeux pokémons, nous pouvons nous interesser à comment le design des pokémons
-a évolué pour provoquer ce power creep.
-
-La façon la plus simple qu'aurait Game Freak pour augmenter la puissance des
-pokémons des nouvelles générations par rapport aux anciennes serait d'augmenter
-le total de statistiques des nouveaux pokémons. En effet, les statistiques des
-pokémons sont les seuls données strictement "positive" pour un pokémon :  un
-type donnent les résistances mais aussi les faiblesses d'un pokémon, tandis que
-les talents sont très divers et donc parfois difficilement comparable (un talent
-améliore souvent certains aspects par rapport à d'autres).
 
 Ci-dessous se trouve l'évolutions des moyennes sur les générations d'aparition
 des statistiques des pokémons, ainsi que leur total de statistique :
