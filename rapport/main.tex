@@ -251,7 +251,7 @@ Notons que certaines données influant rarement sur les combats, comme le sexe
 des pokémons ou leur poids, ne seront pas pris en compte, car leur influence sur
 la viabilité d'un pokémon est négligeable.
 
-\subsection{Présentation du jeu de donnée}
+\subsection{Présentation du jeu de données}
 Le tableau \textit{Pokemon.csv} contient, pour chaque pokémon, ses statistiques,
 ses types, sa génération d'origine et un attribut "Can Evolve", qui indique si
 le pokémon peut encore évoluer ou non (les pokémons utilisés en compétitions
@@ -374,8 +374,9 @@ aspects du design des pokémons.
 Comme nous l'avons vu précédemment, les données associées sont à la fois des
 données quantitatives (statistiques) et qualitatives (types, capacités,
 talents). Nous avons choisi de réduire la dimentionnalité des données à l'aide
-des méthodes d'analyse en composantes principales et d'analyse des composantes
+des méthodes d'analyse en composantes principales et d'analyse des correspondances
 multiples.
+
 \subsubsection{Réduction de la dimentionnalité sur les statistiques}
 Les statistiques d'un pokémon sont des données quantitatives, nous pouvons donc
 appliquer une Analyse en Composantes Principales classique. Notons que notre
@@ -422,7 +423,49 @@ habitudes de design :
     en général, sauf leur vitesse qui est souvent moyenne, doit être importante.
 \end{itemize}
 \subsubsection{Réduction de la dimentionnalité sur les types et les capacités}
-Test
+Les pokémons ne peuvent pas apprendre les mêmes capacités dans les jeux vidéos pokémon. L'objectif de cette partie est d'étudier quelles capacités les pokémons d'un type de pokémon peuvent apprendre. L'intérêt de cette partie est double:  
+\begin{itemize}
+    \item 
+    Tout d'abord, il s'agit de confirmer l'intuition que les pokémons d'un type peuvent apprendre des capacités associées au même type. 
+    \item Ensuite, nous souhaitons visualiser le principe de coverage: à priori, si un pokémon de type Feu doit en affronter un autre, il ne peut pas utiliser de capacités de type Feu pour vaincre de manière efficace son adversaire. Il vaut mieux qu'il possède des capacités efficaces pour attaquer un pokémon de type Feu: les capacités du type Eau sont un bon exemple. Cependant, selon le type de pokémon étudié, il est possible que le design des pokémons ait été fait de sorte qu'un type possède une mauvaise coverage. 
+\end{itemize}
+
+Deux jeux de données binaires sont utiles ici: un premier qui contient les pokémons en entrée et les types des pokémons en colonne, un second qui contient les pokémons en entrée et les capacités qui sont pourraient ou non être apprises par ces pokémons en colonne. Le premier jeu de données sert à classifier les pokémons selon leur type afin de raisonner type par type dans l'analyse du second jeu de données.
+
+Le second jeu de données contient 592 colonnes (toutes les capacités des jeux vidéos pokémon). Cette dimension étant importante, nous avons choisi de la réduire grâce à l'analyse des correspondances multiples (ACM). Nous avons choisi cette méthode puisque les données étaient binaires donc assimilables à des données qualitatives dont les seules modalités sont 0 et 1. 
+
+Afin de choisir la nouvelle dimension, nous utilisons le diagramme d'éboulis des valeurs propres. Etant donné que le jeu de données utilisé contient 291 entrées (pokémons) et 592 colonnes, la dimension maximale du nouvel espace ne peut dépasser 291. 
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{eboulis_MCA.png}
+    \caption{Diagramme d'éboulis des valeurs propres}.
+\end{figure}
+
+On remarque que la rupture de pente de la courbe se trouve vers la 25$^{e}$ composante. C'est donc la dimension qu'on choisit.
+
+L'objectif est maintenant de trouver si certains axes propres représentent bien certains types de pokémons. Pour cela, on regarde comment s'expriment les pokémons en fonction des composantes. Si les pokémons d'un même type ont tous une composante forte selon un axe propre et que les pokémons des autres types ont tous une composante faible selon ce même axe, alors la composante représente bien les pokémons du type trouvé. 
+
+Jusqu'à la fin de la section, nous allons prendre l'exemple de la 3$^{e}$ composante qui contient des résultats satisfaisants et intuitifs. Pour cette composante, on obtient la boîte à moustache suivante: 
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{moustache_MCA.png}
+    \caption{Représentativité du 3e axe dans la construction des pokémons, classés par type}.
+\end{figure}
+
+On remarque que les pokémons de type Feu ont une forte composante selon le 3$^{e}$ axe. Par ailleurs, on voit que les pokémons de type Eau sont peu représentés sur cet axe. Ce résultat est cohérent avec le design du jeu qui veut que les pokémons de type Feau et Eau soient opposés. 
+
+Maintenant que l'on sait que le 3e axe représente surtout les pokémons de type Feu, on peut voir quelles capacités ont permis de construire ce 3e axe. Cela nous permet de trouver quelles capacités sont utilisées par les pokémons de type Feu. Le résultat découle de la matrice des contributions. On peut par exemple afficher les 30 capacités qui ont le plus contribué à construire le 3$^{e}$ axe et les 30 capacités qui y on le moins contribué:
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=0.4\textwidth]{bottom_attaques_MCA.png}
+    \includegraphics[width=0.4\textwidth]{top_attaques_MCA.png}
+    \caption{Capacités les moins influentes (gauche), capacités les plus influentes (droite)}.
+    \label{fig:image3}
+\end{figure}
+
+On remarque que les capacités les plus utilisées par les pokémons de type Feu sont les attaques de type Feu (infernal parade, flame wheel, raging fury, inferno...). Ce résultat est cohérent avec l'intuition: un pokémon utilise souvent les capacités associées à son type. Cela s'explique notamment par l'amplification de la puissance d'une capacité si elle est utilisée par un pokémon du même type. 
+On remarque que les capacités les moins utilisées par les pokémons de type Feu sont souvent de type Eau (bubble team, aqua ring, water shuriken...). Cela est dû à deux choses: d'une part le fait que les pokémons de type Feu n'ont presque jamais de capacités de type Eau, les deux types étant opposés; d'autre part le fait que les pokémons de type Eau sont représentés négativement par le 3$^{e}$ axe et donc que les capacités associées à ce type y sont également représentées négativement dans la construction de l'axe.
+
 \subsection{Clustering des pokémons}
 Test
 
