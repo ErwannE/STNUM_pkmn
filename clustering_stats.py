@@ -16,7 +16,7 @@ from utils import plot_average_attributes
 # Import data. Only pokemon that have usage, in gen n° n_gen.
 
 def import_stats():
-    request = f'''SELECT Name, Total, HP, Attack, Defense, "Sp. Atk", "Sp. Def", Speed, Generation \
+    request = f'''SELECT Name, HP, Attack, Defense, "Sp. Atk", "Sp. Def", Speed, Generation \
     FROM Pokemon WHERE Pokemon.Can_Evolve = 0'''
     df = pd.read_sql(request, conn)
     # reshaping to get names of pokemon as indexes
@@ -32,7 +32,9 @@ def import_usage():
     df = df.drop('name_pokemon', axis=1)
     return df
 
-
+stats_gen = import_stats()
+print(stats_gen.head())
+print(stats_gen.info())
 
 def cah_model_plot(data_cluster, n, k_max=0):
     '''Allows to determine the optimal number of clusters'''
@@ -170,6 +172,7 @@ def add_percent_of_used(df_usage,df_clusters,mean_usage):
     # add it to mean_usage_by_cluster
     mean_usage['%_pkmn_used'] = part_used_counts
 
+'''
 def mean_BST_by_cluster(stats_clus):
     # compute the mean BST in the cluster
     mean_BST_by_cluster = stats_clus.groupby('Cluster_label')['Total'].mean().reset_index()
@@ -179,7 +182,7 @@ def mean_BST_by_cluster(stats_clus):
 
 def add_BST_to_df(mean_BST,df):
     df['Mean_BST'] = mean_BST['Total']
-    return df
+    return df'''
 
 def part_poke_in_cluster_by_gen(stats,clusters,mapping):
     n_clusters = len(clusters)
@@ -256,6 +259,7 @@ def plot_usage_clusters_gen(gen_summary,gens_list,upbound,fixed_axis=True):
         plt.title("Usage in clusters for gen " + str(i))
         plt.show()
 
+
 def main(list_gens, mode):
     # Import stats Data
     stats_gen = import_stats()
@@ -273,12 +277,12 @@ def main(list_gens, mode):
     mean_usage = mean_usage_by_cluster(df_usage)
     add_percent_of_used(df_usage,df_clusters,mean_usage)
     stats_gen_clus = add_cluster_to_df(df_clusters,stats_gen)
-    mean_BST = mean_BST_by_cluster(stats_gen_clus)
+    #mean_BST = mean_BST_by_cluster(stats_gen_clus)
     # Create the summary for each generation
     # Contains the part of pokemon in each cluster for each generation and the mean_BST
-    clusters_summary = add_BST_to_df(mean_BST,mean_usage)
-    clusters_summary = clusters_summary.sort_values(by='usage', ascending=True)
-    print('clusters_summary :', clusters_summary.to_string())
+    #clusters_summary = add_BST_to_df(mean_BST,mean_usage)
+    #clusters_summary = clusters_summary.sort_values(by='usage', ascending=True)
+    #print('clusters_summary :', clusters_summary.to_string())
     # plot the part of the number of pokemon in each cluster
     part_poke_in_cluster, n_poke_used_by_gen_by_clus = part_poke_in_cluster_by_gen(stats_gen, clusters, mapping)
     plot_clusters_gen(part_poke_in_cluster,[i for i in range(1,10)],0.3)
