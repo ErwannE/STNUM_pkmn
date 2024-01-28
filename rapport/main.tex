@@ -91,47 +91,47 @@
 La série de jeux Pokémon, créée par Game Freak et éditée par Nintendo, a débuté
 en 1996 avec les jeux Pokémon Rouge et Vert au Japon, avant de conquérir le
 monde entier. L'univers Pokémon repose sur le concept de capture et
-d'entraînement de créatures appelées pokémons, utilisées pour combattre d'autres
-dresseurs. Le système de combat se joue au tour par tour, les pokémons
-s'affrontant en un contre un, les joueurs pouvant ramener jusqu'à 6 pokémons.
+d'entraînement de créatures appelées Pokémons, utilisées pour combattre d'autres
+dresseurs. Le système de combat se joue au tour par tour, les Pokémons
+s'affrontant en un contre un, les joueurs pouvant ramener jusqu'à 6 Pokémons.
 Chaque jeu de la série se déroule dans une région différente du monde fictif de
-Pokémon, présentant de nouveaux pokémons, des villes uniques et des défis
+Pokémon, présentant de nouveaux Pokémons, des villes uniques et des défis
 spécifiques. Aujourd'hui, Pokémon a été adapté pour de nombreux autres médias,
 et la franchise Pokémon est aujourd'hui considérée comme la franchise la plus
 lucrative de l'histoire.
 
 La série principale de jeux Pokémon ne s'est pas arrêtée depuis 1996, et un
 nouveau jeu est publié par Game Freak tous les 3 ans environ. Pour rendre chaque
-nouveau jeu intéressant, il est créé de nouveaux pokémons, ayant un design
+nouveau jeu intéressant, de nouveaux Pokémons sont créés, ayant un design
 unique par rapport aux précédents (types, statistiques, capacités apprises...).
 De plus, et afin d'inciter les joueurs à acheter le jeu, l'éditeur a tendance à
-augmenter la "puissance" des nouveaux pokémons afin de leur donner un interêt
-par rapport aux anciens : l'augmentation de la "puissance" des pokémons (en
-moyenne) est nommé powercreep. Ce phénomène est dénoncé par certains joueurs,
-qui voient leurs pokémons favoris devenir plus obcelète de génération en
+augmenter la "puissance" des nouveaux Pokémons afin de leur donner un interêt
+par rapport aux anciens : l'augmentation de la "puissance" des Pokémons (en
+moyenne) est nommé \textbf{powercreep}. Ce phénomène est dénoncé par certains joueurs,
+qui voient leurs Pokémons favoris devenir plus obsolètes de génération en
 génération. 
 
 Ce phénomène de powercreep est au coeur de notre projet. Nous allons chercher à
-déterminer quels changements ont eu lieu dans le design des nouveaux pokémons au
-fil des générations, et dans quel mesure ces changements peuvent expliquer le
+déterminer quels changements ont eu lieu dans le design des nouveaux Pokémons au
+fil des générations, et dans quelle mesure ces changements peuvent expliquer le
 phénomène de powercreep.
 
 \begin{figure}[!h]
     \centering
     \includegraphics[width=0.6\textwidth]{Image/scarlet-violet.jpg}
     \caption{\textit{Pokémon Écarlate et Violet}, 2 derniers opus de la série,
-    incluant 120 nouveaux pokémons et de nombreux anciens. Ces jeux constituent
-    la $9^{e}$ génération de la saga ($9^{e}$  jeux ajoutant de nouveaux
-    pokémons.)}
+    incluant 120 nouveaux Pokémons et de nombreux anciens. Ces jeux constituent
+    la $9^{e}$ génération de la saga ($9^{e}$  jeu ajoutant de nouveaux
+    Pokémons.)}
     \label{fig:image1}
 \end{figure}
 
-La première base de donnée décrit les différentes statistiques des pokémons
+La première base de données décrit les différentes statistiques des Pokémons
 (base stats, qui sont des bytes, types qui sont des catégories, génération
-d'appartenance...), la seconde sont les statistiques d'usages des pokémons sur
+d'appartenance...), la seconde sont les statistiques d'usages des Pokémons sur
 le simulateur de combat \textit{Pokemon Showdown!}, qui est utilisé par les
 joueurs-compétiteurs des jeux Pokémon. Ces deux jeux de données nous permettent
-de vérifier ce qui, dans le design d'un pokémon, donne sa viabilité (autrement
+de vérifier ce qui, dans le design d'un Pokémon, donne sa viabilité (autrement
 dit sa puissance). 
 
 \newpage
@@ -139,25 +139,25 @@ dit sa puissance).
 \subsection{Explication sur le déroulement d'une partie et l'influence des données}
 
 Avant de chercher les origines du phénomène de powercreep, il nous faut évaluer
-quelles données influent sur la viabilité d'un pokémon. 4 données sont en
-général retenues pour décrire un pokémon :
+quelles données influent sur la viabilité d'un Pokémon. 4 données sont en
+général retenues pour décrire un Pokémon :
 
 \begin{itemize}
     \item Ses \textbf{statistiques}, qui sont encodées sur un octet et sont
     divisées entre HP (\textit{Health Points}, "points de vie" en français),
     Attaque, Défense, Attaque Spéciale, Défense Spéciale et Vitesse. Ces données
     quantitatives influent sur la puissance offensive et défensive des Pokémon.
-    \item Son \textbf{double-type} (un pokémon peut avoir 1 ou 2 types parmi
+    \item Son \textbf{double-type} (un Pokémon peut avoir 1 ou 2 types parmi
     18), qui vont interagir avec les attaques reçues et subies (chaque attaque
-    est associée à un type, qui intéragira avec celui du lanceur et de la cible)
+    est associée à un type, qui interagira avec celui du lanceur et de la cible)
     \item L'ensemble des capacités qu'il peut apprendre, appelé
     \textbf{movepool}. Les capacités (parfois nommées "attaques" lorsqu'elles
-    infligent des dégâts au pokémon adverse) sont les actions réalisables par
-    les pokémons une fois sur le terrain. Certaines capacités sont uniques,
-    d'autres sont accessibles par plusieurs pokémons.
+    infligent des dégâts au Pokémon adverse) sont les actions réalisables par
+    les Pokémons une fois sur le terrain. Certaines capacités sont uniques,
+    d'autres sont accessibles par plusieurs Pokémons.
     \item Ses \textbf{talents}, qui sont des pouvoirs particuliers qui se
     manifestent en combat. Certains talents sont uniques, d'autres sont
-    accessibles par plusieurs pokémons. Une espèce de pokémon peut en avoir
+    accessibles par plusieurs Pokémons. Une espèce de Pokémon peut en avoir
     jusqu'à 3 différents, mais chaque individu n'en a qu'un seul.
 \end{itemize}
 
@@ -174,26 +174,26 @@ Une explication rapide du déroulement d'une partie s'impose (certains points,
 non essentiels à la compréhension, seront passés):
 \begin{enumerate}
     \item Avant le début du combat, chaque joueur \textbf{choisit} son équipe
-    d'au plus \textbf{6 pokémons} (en général 6, puisqu'il n'y a aucun intéret à
-    en jouer moins). Il choisit pour chaque pokémon \textbf{4 capacités} parmis
-    celles que le pokémon peut apprendre et un de ses talents (s'il en a
+    d'au plus \textbf{6 Pokémons} (en général 6, puisqu'il n'y a aucun intéret à
+    en jouer moins). Il choisit pour chaque Pokémon \textbf{4 capacités} parmi
+    celles que le Pokémon peut apprendre et un de ses talents (s'il en a
     plusieurs disponibles, il faut en choisir un).
     \item Au début du combat, chaque joueur sélectionne le \textbf{premier
-    pokémon} à être envoyé sur le terrain.
+    Pokémon} à être envoyé sur le terrain.
     \item L'objectif du match est d'\textbf{amener les points de vie} (noté PV
-    ou HP pour \textit{Health Points}) de chacun des pokémons de l'adversaire
-    \textbf{à 0}. Chaque tour, chaque joueur doit choisir d'executer une des 4
-    capacités de son pokémon actif (qui pourra par exemple retirer des points de
-    vie au pokémon adverse actif), ou de changer de pokémon actif pour un autre
-    de ses 6 pokémons (ce qu'on appelle \textit{switch}). Le joueur agissant en
-    premier est déterminé à la fois par la statistique de vitesse des pokémons
+    ou HP pour \textit{Health Points}) de chacun des Pokémons de l'adversaire
+    \textbf{à 0}. Chaque tour, chaque joueur doit choisir d'exécuter une des 4
+    capacités de son Pokémon actif (qui pourra par exemple retirer des points de
+    vie au Pokémon adverse actif), ou de changer de Pokémon actif pour un autre
+    de ses 6 Pokémons (ce qu'on appelle \textit{switch}). Le joueur agissant en
+    premier est déterminé à la fois par la statistique de vitesse des Pokémons
     actifs et un système de "priorité" (qu'on ne détaillera pas, celui-ci se
-    limitant en général au fait qu'un changement de pokémon se fait avant
+    limitant en général au fait qu'un changement de Pokémon se fait avant
     n'importe quelle capacité de l'adversaire). Les capacités peuvent avoir
     divers effets, mais 3 catégories sont importantes à retenir :
           \begin{itemize}
               \item les capacités \textbf{physiques}, qui font baisser les
-              points de vie du pokémon adverse actif en fonction de la
+              points de vie du Pokémon adverse actif en fonction de la
               "puissance" de la capacité (appelée \textit{base power}, propre à
               la capacité), des types de la capacité, du lanceur et de
               l'adversaire, et des statistiques respectivement d'attaque du
@@ -212,8 +212,8 @@ non essentiels à la compréhension, seront passés):
     \caption{Table des types, donnant les modificateurs sur les dégâts infligés
     par une capacité physique ou spéciale en fonction du type de l'attaque et de
     l'adversaire. Ainsi, une capacité de type Feu infligera 2x plus de dégâts
-    sur un pokémon de type Plante, tandis qu'elle infligera 2x moins de dégats
-    sur un pokémon de type Eau.}.
+    sur un Pokémon de type Plante, tandis qu'elle infligera 2x moins de dégats
+    sur un Pokémon de type Eau.}.
     \label{fig:tabletype}
 \end{figure}
 
@@ -226,7 +226,7 @@ Avec :
 \begin{itemize}
     \item $Atk$ la statistique offensive du lanceur (respectivement l'attaque
     pour une capacité physique, l'attaque spéciale pour une capacité spéciale)
-    \item $Def$ la statistique défensive du pokémon adverse (respectivement la
+    \item $Def$ la statistique défensive du Pokémon adverse (respectivement la
     défense pour une capacité physique, la défense spéciale pour une capacité
     spéciale)
     \item $BasePower$ la puissance de la capacité
@@ -241,75 +241,75 @@ Ce qu'il faut retenir :
     \item Les statistiques d'\textbf{attaque} et d'\textbf{attaque spéciale}
     (qu'on notera Atk et Sp.Atk) influent positivement sur les dégats infligés
     par les capacités \textbf{physiques} ou \textbf{spéciales} lancées par le
-    pokémon
+    Pokémon
     \item Les statistiques de \textbf{défense} et de \textbf{défense spéciale}
-    (qu'on notera Def et Sp.Def) réduisent les dégats reçus lorsque le pokémon
+    (qu'on notera Def et Sp.Def) réduisent les dégats reçus lorsque le Pokémon
     subit une capacité \textbf{physique} ou \textbf{spéciale}.
     \item La statistique \textbf{HP} donne le \textbf{nombre de point de vie}
-    d'un pokémon au début du combat (qui représente sa capacité à encaisser des
+    d'un Pokémon au début du combat (qui représente sa capacité à encaisser des
     capacités sans tomber KO).
     \item La statistique de \textbf{vitesse} (qu'on notera Spe ou Speed) donne
-    l'\textbf{ordre des actions} au sein d'un tour (quel pokémon va executer sa
+    l'\textbf{ordre des actions} au sein d'un tour (quel Pokémon va exécuter sa
     capacité en premier).
 \end{itemize}
 
 Notons que certaines données influant rarement sur les combats, comme le sexe
-des pokémons ou leur poids, ne seront pas pris en compte, car leur influence sur
-la viabilité d'un pokémon est négligeable.
+des Pokémons ou leur poids, ne seront pas pris en compte, car leur influence sur
+la viabilité d'un Pokémon est négligeable.
 
 \subsection{Présentation du jeu de données}
-Le tableau \textit{Pokemon.csv} contient, pour chaque pokémon, ses statistiques,
+Le tableau \textit{Pokemon.csv} contient, pour chaque Pokémon, ses statistiques,
 ses types, sa génération d'origine et un attribut "Can\_Evolve", qui indique si
-le pokémon peut encore évoluer ou non (les pokémons utilisés en compétitions
-sont, sauf exceptions, entièrement évolués). Il contient donc une partie des
-données étudiées définissant la viabilité d'un pokémon.
+le Pokémon peut encore évoluer ou non (les Pokémons utilisés en compétition
+sont, sauf exception, entièrement évolués). Il contient donc une partie des
+données étudiées définissant la viabilité d'un Pokémon.
 
-Le second jeu de donnée provient du document \textit{gen9ou-0.json} (fourni par
+Le second jeu de données provient du document \textit{gen9ou-0.json} (fourni par
 le simulateur \textit{Pokémon Showdown!}). Une rapide explication du format
 compétitif joué sur le site est nécessaire afin de comprendre ce document.
 
 Le format compétitif principal, nommé \textit{OU} pour \textit{OverUsed}, est un
-format reprenant les combats entre joueurs disponibles dans les jeux pokémons.
-La plupart des pokémons sont autorisés, les pokémons bannis sont en général les
-pokémons dit \textit{légendaires} (qui font figure d'objectif final de
+format reprenant les combats entre joueurs disponibles dans les jeux Pokémons.
+La plupart des Pokémons sont autorisés, les Pokémons bannis sont en général les
+Pokémons dit \textit{légendaires} (qui font figure d'objectif final de
 l'aventure des jeux, et ont des statistiques largement supérieures aux autres
-pokémons), et d'autres pokémons bannis via des votes de la communauté de
+Pokémons), et d'autres Pokémons bannis via des votes de la communauté de
 joueurs. Certaines règles s'appliquent en plus (interdiction de jouer deux fois
-le même pokémon, interdiction d'infliger le statut "sommeil" à plus de 1 pokémon
+le même Pokémon, interdiction d'infliger le statut "sommeil" à plus de 1 Pokémon
 adverse...), et le combat se déroule selon l'explication plus haut. Les joueurs
 sont classés via un système d'ELO similaire à celui utilisé pour les échecs.
 
 Le simulateur garde certaines données de chaque partie jouée sur le site et,
-chaque mois, fourni ces données collectées sur le mois précédent. Ces données,
+chaque mois, fournit ces données collectées sur le mois précédent. Ces données,
 contenues dans le document \textit{gen9ou-0}, contiennent notament :
 \begin{itemize}
-    \item le nombre total de combat joué
-    \item le nombre d'occurences de chaque pokémon
-    \item le nombre d'occurences de chaque capacité par pokémon
-    \item le nombre d'occurences de chaque talent par pokémon
+    \item le nombre total de combats joués
+    \item le nombre d'occurences de chaque Pokémon
+    \item le nombre d'occurences de chaque capacité par Pokémon
+    \item le nombre d'occurences de chaque talent par Pokémon
 \end{itemize}
 Ces données complètent alors des données manquantes de \textit{Pokemon.csv}. On
 fera les deux approximations suivantes :
 \begin{itemize}
-    \item le taux d'utilisation d'un pokémon représente sa viabilité ou
+    \item le taux d'utilisation d'un Pokémon représente sa viabilité ou
     "puissance"
-    \item les seules capacités influant sur la viabilité d'un pokémon sont
+    \item les seules capacités influant sur la viabilité d'un Pokémon sont
     celles ayant déjà été utilisées sur le simulateur (étant donné que le nombre
     de parties jouées est de l'ordre du million, on peut considérer que toutes
-    les capacités "utiles" des pokémons ont été utilisées au moins une fois)
+    les capacités "utiles" des Pokémons ont été utilisées au moins une fois)
 \end{itemize}
 \section{Description et analyse des données}
 \subsection{Description des données}
 Avant de chercher à caractériser le powercreep, il est nécessaire de pouvoir
 prouver son existence. Pour cela, nous pouvons nous intéresser à l'évolution de
-l'usage des pokémons par génération. En effet, si le powercreep existe, on
-devrait observer une augmentation de l'usage des pokémons des générations les
+l'usage des Pokémons par génération. En effet, si le powercreep existe, on
+devrait observer une augmentation de l'usage des Pokémons des générations les
 plus récentes. L'image ci-dessous représente l'évolution de l'usage moyen des
-pokémons par génération, en utilisant les données de \textit{gen9ou-0.json} :
+Pokémons par génération, en utilisant les données de \textit{gen9ou-0.json} :
 \begin{figure}[!h]
     \centering
     \includegraphics[width=0.6\textwidth]{Image/avg_usage_by_generation.png}
-    \caption{Évolution de l'usage moyen des pokémons par génération}
+    \caption{Évolution de l'usage moyen des Pokémons par génération}
     \label{fig:image4}
 \end{figure}
 
@@ -317,48 +317,48 @@ On constate que, s'il n'y a pas de net corrélation entre taux d'usage et
 génération lors des 7 premières générations, les générations 8 et 9 ont un taux
 d'usage moyen supérieur aux générations précédentes. On peut donc affirmer que
 le powercreep existe bien sur les dernières générations.\\
-N.B. : La baisse d'usage des pokémons de génération 6 et 7 par rapport aux
-générations précédentes s'explique par le fait que certains pokémons n'était pas
+N.B. : La baisse d'usage des Pokémons de génération 6 et 7 par rapport aux
+générations précédentes s'explique par le fait que certains Pokémons n'étaient pas
 encore disponible sur le simulateur/dans les jeux lorsque les données ont été
-collectées. En particulier, la génération 7 possède de nombreux pokémons qui
-auraient été joués, mais qui sont restés exclusif à leur jeu d'origine.
+collectées. En particulier, la génération 7 possède de nombreux Pokémons qui
+auraient été joués, mais qui sont restés exclusifs à leur jeu d'origine.
 
 
 Maintenant que nous avons vu que le phénomène de powercreep s'appliquait bien
-aux jeux pokémons, nous pouvons nous intéresser à comment le design des pokémons
+aux jeux Pokémons, nous pouvons nous intéresser à comment le design des Pokémons
 a évolué pour provoquer ce powercreep.
 
 La façon la plus simple qu'aurait Game Freak (développeur des jeux Pokémon) pour
-augmenter la puissance des pokémons des nouvelles générations par rapport aux
-anciens serait d'augmenter le total de statistiques des nouveaux pokémons. En
-effet, les statistiques des pokémons sont les seuls données strictement
-"positive" pour un pokémon :  un type donnent les résistances mais aussi les
-faiblesses d'un pokémon, tandis que les talents sont très différents les uns des
+augmenter la puissance des Pokémons des nouvelles générations par rapport aux
+anciens serait d'augmenter le total de statistiques des nouveaux Pokémons. En
+effet, les statistiques des Pokémons sont les seuls données strictement
+"positive" pour un Pokémon :  un type donne les résistances mais aussi les
+faiblesses d'un Pokémon, tandis que les talents sont très différents les uns des
 autres et donc parfois difficilement comparables (un talent améliore souvent
 certains aspects par rapport à d'autres).
 
 On peut donc s'intéresser à l'évolution de la moyenne du total de statistiques
-des pokémons par génération :
+des Pokémons par génération :
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.6\textwidth]{Image/avg_total_per_generation.png}
-    \caption{Évolution du total de statistique moyen en fonction de la
+    \caption{Évolution du total de statistiques moyen en fonction de la
     génération}.
     \label{fig:image5}
 \end{figure}
 \newpage
-On constate que le total de statistique moyen ne semble pas être la raison de
-l'augmentation d'usage des pokémons de dernière génération : les moyennes des
+On constate que le total de statistiques moyen ne semble pas être la raison de
+l'augmentation d'usage des Pokémons de dernière génération : les moyennes des
 générations 8 et 9 (qui, nous l'avons vu précédemment, ont introduit les
-pokémons les plus viables) sont semblables à celle des génération 4-5-6, dont
+Pokémons les plus viables) sont semblables à celle des génération 4-5-6, dont
 les usages sont nettement plus bas.
 
 Une autre tendance intéressante à vérifier concernant les statistiques des
-pokémons est l'évolution de la variance inter-statistique. En général, un
-pokémon ayant des statistiques très déséquilibrées (par exemple, un pokémon
+Pokémons est l'évolution de la variance inter-statistique. En général, un
+Pokémon ayant des statistiques très déséquilibrées (par exemple, un Pokémon
 ayant des statistiques d'attaque et de vitesse très élevées et toutes les autres
-très faibles) sera plus viable qu'un pokémon ayant des statistiques plus
+très faibles) sera plus viable qu'un Pokémon ayant des statistiques plus
 lissées, car le premier pourra plus facilement se justifier un rôle au sein
 d'une équipe. On peut donc s'intéresser à l'évolution de la moyenne sur les
 génération de la variance entre les 6 statistiques :
@@ -372,22 +372,22 @@ génération de la variance entre les 6 statistiques :
 \end{figure}
 
 Une fois de plus, on ne peut expliquer le powercreep des dernières générations
-par cette donnée : en effet, les statistiques des pokémons originaires de la
+par cette donnée : en effet, les statistiques des Pokémons originaires de la
 deuxième génération sont fortement déséquilibrées et pourtant, leurs usages sont
-parmis les plus bas. Il faut donc chercher la cause du powercreep sur d'autres
-aspects du design des pokémons.
+parmi les plus bas. Il faut donc chercher la cause du powercreep sur d'autres
+aspects du design des Pokémons.
 
-\subsection{Réduction de la dimentionnalité}
+\subsection{Réduction de la dimension}
 Comme nous l'avons vu précédemment, les données associées sont à la fois des
 données quantitatives (statistiques) et qualitatives (types, capacités,
-talents). Nous avons choisi de réduire la dimentionnalité des données à l'aide
-des méthodes d'analyse en composantes principales et d'analyse des
+talents). Nous avons choisi de réduire la dimension des données à l'aide
+des méthodes d'analyse en composantes principales et d'analyse en
 correspondances multiples.
 
-\subsubsection{Réduction de la dimentionnalité sur les statistiques}
-Les statistiques d'un pokémon sont des données quantitatives, nous pouvons donc
+\subsubsection{Réduction de la dimension sur les statistiques}
+Les statistiques d'un Pokémon sont des données quantitatives, nous pouvons donc
 appliquer une Analyse en Composantes Principales classique. Notons que notre
-espace d'origine comprend 6 dimensions pour les 6 statistiques d'un pokémon (HP,
+espace d'origine comprend 6 dimensions pour les 6 statistiques d'un Pokémon (HP,
 Attaque, Défense, Attaque Spéciale, Défense Spéciale et Vitesse). Les figures
 ci-dessous contiennent des informations obtenues à partir de l'ACP :
 
@@ -409,54 +409,54 @@ ci-dessous contiennent des informations obtenues à partir de l'ACP :
     \caption{Vecteur propre de l'ACP}
 \end{figure}
 
-On constate qu'il n'est pas vraiment pertinent de réduire la dimentionnalité des
+On constate qu'il n'est pas vraiment pertinent de réduire la dimension des
 statistiques : en effet, la Figure 4 ne permet pas de distinguer un "angle" sur
-la courbe des valeurs prores, qui se situe en général à la dimension à partir
-desquels la perte d'information par dimension réduite est importante. Cela
+la courbe des valeurs propres, qui se situe en général à la dimension à partir
+de laquelle la perte d'information par dimension réduite est importante. Cela
 s'explique facilement par le fait que les 6 statistiques sont fortement
-indépendantes entre les pokémons : s'il peut exister certains "patterns" dans
+indépendantes entre les Pokémons : s'il peut exister certains "patterns" dans
 les répartitions de statistiques (voir la partie concernant le Clustering), il
-n'y a pas de correlations systématiques entre les catégories de statistique. \\
+n'y a pas de corrélations systématiques entre les catégories de statistique. \\
 On peut tout de même remarquer au sein des vecteurs propres (Figure 6) des
 habitudes de design :
 \begin{itemize}
-    \item Les vecteurs 1 et 3 montrent une tendance qu'ont les pokémons ayant
+    \item Les vecteurs 1 et 3 montrent une tendance qu'ont les Pokémons ayant
     une forte défense à avoir une faible attaque spéciale et vitesse, tandis que
-    les pokémons ayant une statistique importante d'attaque tendent à avoir des
+    les Pokémons ayant une statistique importante d'attaque tendent à avoir des
     statistiques spéciales (Sp. Atk, Sp. Def) faibles.
     \item Le vecteur 2 montre des composantes positives dans toutes les
     statistiques sauf en vitesse (qui est quasi nulle) : la composante selon ce
-    vecteur des pokémons dit "légendaires", qui ont de très hautes statistique
+    vecteur des Pokémons dit "légendaires", qui ont de très hautes statistiques
     en général, sauf leur vitesse qui est souvent moyenne, doit être grande et
-    le nombre important de sorte de pokémons légendaires aux statistiques
+    le nombre important de sorte de Pokémons légendaires aux statistiques
     similaires justifie la forme de ce vecteur.
 \end{itemize}
-\subsubsection{Réduction de la dimentionnalité sur les types et les capacités}
-Tous les pokémons ne peuvent pas apprendre les mêmes capacités dans les jeux
-vidéos Pokémon. L'objectif de cette partie est d'étudier quelles capacités les
-pokémons d'un type de pokémon peuvent apprendre. L'intérêt de cette partie est
+\subsubsection{Réduction de la dimension sur les types et les capacités}
+Tous les Pokémons ne peuvent pas apprendre les mêmes capacités dans les jeux
+vidéo Pokémon. L'objectif de cette partie est d'étudier quelles capacités les
+Pokémons d'un type de Pokémon peuvent apprendre. L'intérêt de cette partie est
 double:   
 \begin{itemize}
     \item 
-    Tout d'abord, il s'agit de confirmer l'intuition que les pokémons d'un type
+    Tout d'abord, il s'agit de confirmer l'intuition que les Pokémons d'un type
     peuvent apprendre des capacités associées au même type. 
     \item Ensuite, nous souhaitons visualiser le principe de \textit{coverage}
-    (ou \textit{couverture d'option}): à priori, si un pokémon de type Feu doit
+    (ou \textit{couverture d'option}): à priori, si un Pokémon de type Feu doit
     en affronter un autre, il ne peut pas utiliser de capacités de type Feu pour
     vaincre de manière efficace son adversaire car les capacités de type Feu
-    sont résistées par les pokémons ayant le type Feu (voir la
+    sont résistées par les Pokémons ayant le type Feu (voir la
     table~\ref{fig:tabletype}). Il vaut mieux qu'il possède des capacités
-    efficaces pour attaquer un pokémon de type Feu: les capacités du type Eau
+    efficaces pour attaquer un Pokémon de type Feu: les capacités du type Eau
     sont un bon exemple, on dira alors que le type Eau est un bon
-    \textit{coverage} au type Feu. Cependant, selon le type de pokémon étudié,
-    il est possible que des choix de design implique qu'un type possède une
-    mauvaise coverage. 
+    \textit{coverage} au type Feu. Cependant, selon le type de Pokémon étudié,
+    il est possible que des choix de design impliquent qu'un type possède un
+    mauvais coverage. 
 \end{itemize}
 Deux jeux de données binaires sont utiles ici: un premier qui contient les
-pokémons en entrée et les types des pokémons en colonne, un second qui contient
-les pokémons en entrée et les capacités qui sont pourraient ou non être apprises
-par ces pokémons en colonne. Le premier jeu de données sert à classifier les
-pokémons selon leur type afin de raisonner type par type dans l'analyse du
+Pokémons en entrée et les types des Pokémons en colonne, un second qui contient
+les Pokémons en entrée et les capacités qui pourraient ou non être apprises
+par ces Pokémons en colonne. Le premier jeu de données sert à classifier les
+Pokémons selon leur type afin de raisonner type par type dans l'analyse du
 second jeu de données.
 
 Le second jeu de données contient 592 colonnes (toutes les capacités des jeux
@@ -467,7 +467,7 @@ données qualitatives dont les seules modalités sont 0 et 1.
 
 Afin de choisir la nouvelle dimension, nous utilisons le diagramme d'éboulis des
 valeurs propres. Etant donné que le jeu de données utilisé contient 291 entrées
-(pokémons) et 592 colonnes, la dimension maximale du nouvel espace ne peut
+(Pokémons) et 592 colonnes, la dimension maximale du nouvel espace ne peut
 dépasser 291. 
 \newpage
 \begin{figure}[!h]
@@ -480,33 +480,33 @@ On remarque que la rupture de pente de la courbe se trouve vers la 25$^{e}$
 composante. C'est donc la dimension qu'on choisit.
 
 L'objectif est maintenant de trouver si certains axes propres représentent bien
-certains types de pokémons. Pour cela, on regarde comment s'expriment les
-pokémons en fonction des composantes. Si les pokémons d'un même type ont tous
-une composante forte selon un axe propre et que les pokémons des autres types
+certains types de Pokémons. Pour cela, on regarde comment s'expriment les
+Pokémons en fonction des composantes. Si les Pokémons d'un même type ont tous
+une composante forte selon un axe propre et que les Pokémons des autres types
 ont tous une composante faible selon ce même axe, alors la composante représente
-bien les pokémons du type trouvé. 
+bien les Pokémons du type trouvé. 
 
 Jusqu'à la fin de la section, nous allons prendre l'exemple de la 3$^{e}$
 composante qui contient des résultats satisfaisants et intuitifs. Pour cette
-composante, on obtient la boîte à moustache suivante: 
+composante, on obtient la boîte à moustaches suivante: 
 \begin{figure}[!h]
     \centering
     \includegraphics[width=0.5\textwidth]{moustache_MCA.png}
-    \caption{Représentativité du 3e axe dans la construction des pokémons,
+    \caption{Représentativité du 3e axe dans la construction des Pokémons,
     classés par type}.
 \end{figure}
 
-On remarque que les pokémons de type Feu ont une forte composante selon le
-3$^{e}$ axe. Par ailleurs, on voit que les pokémons de type Eau sont peu
+On remarque que les Pokémons de type Feu ont une forte composante selon le
+3$^{e}$ axe. Par ailleurs, on voit que les Pokémons de type Eau sont peu
 représentés sur cet axe. Ce résultat est cohérent avec le design du jeu qui veut
-que les pokémons de type Feau et Eau soient opposés. 
+que les Pokémons de type Feu et Eau soient opposés. 
 
-Maintenant que l'on sait que le 3$^{e}$ axe représente surtout les pokémons de
+Maintenant que l'on sait que le 3$^{e}$ axe représente surtout les Pokémons de
 type Feu, on peut voir quelles capacités ont permis de construire ce 3$^{e}$
 axe. Cela nous permet de trouver quelles capacités sont utilisées par les
-pokémons de type Feu. Le résultat découle de la matrice des contributions. On
+Pokémons de type Feu. Le résultat découle de la matrice des contributions. On
 peut par exemple afficher les 30 capacités qui ont le plus contribué à
-construire le 3$^{e}$ axe et les 30 capacités qui y on le moins contribué:
+construire le 3$^{e}$ axe et les 30 capacités qui y ont le moins contribué:
 \begin{figure}[!h]
     \centering
     \includegraphics[width=0.4\textwidth]{bottom_attaques_MCA.png}
@@ -516,17 +516,17 @@ construire le 3$^{e}$ axe et les 30 capacités qui y on le moins contribué:
     \label{fig:image3}
 \end{figure}
 
-On remarque que les capacités les plus utilisées par les pokémons de type Feu
+On remarque que les capacités les plus utilisées par les Pokémons de type Feu
 sont les attaques de type Feu (infernal parade, flame wheel, raging fury,
-inferno...). Ce résultat est cohérent avec l'intuition: un pokémon a souvent
+inferno...). Ce résultat est cohérent avec l'intuition : un Pokémon a souvent
 accès aux capacités de son type. Cela s'explique notamment par l'amplification
-de la puissance par 50\% d'une capacité si elle est utilisée par un pokémon du
+de la puissance par 50\% d'une capacité si elle est utilisée par un Pokémon du
 même type (mécanique appelée \textit{Same Type Attack Bonus} ou \textit{STAB}).
-On remarque que les capacités les moins utilisées par les pokémons de type Feu
+On remarque que les capacités les moins utilisées par les Pokémons de type Feu
 sont souvent de type Eau (bubble team, aqua ring, water shuriken...). Cela est
-dû à deux choses: d'une part le fait que les pokémons de type Feu n'ont presque
+dû à deux choses: d'une part le fait que les Pokémons de type Feu n'ont presque
 jamais de capacités de type Eau, les deux types étant opposés; d'autre part le
-fait que les pokémons de type Eau sont représentés négativement par le 3$^{e}$
+fait que les Pokémons de type Eau sont représentés négativement par le 3$^{e}$
 axe et donc que les capacités associées à ce type y sont également représentées
 négativement dans la construction de l'axe.
 
@@ -542,8 +542,8 @@ utilisés en stratégie (donc les plus forts) en fonction de la génération
 \subsubsection{Données utilisées et choix des clusters}
 Comme expliqué précédemment, nous allons avoir besoin des données des
 statistiques des Pokémons et de la génération à laquelle ils appartiennent pour
-étudier les clusters par génération. Nous n'étudions que les 681 pokémons ne
-pouvant pas évoluer, les autres étant moins bons que leurs évolution ils ne sont
+étudier les clusters par génération. Nous n'étudions que les 681 Pokémons ne
+pouvant pas évoluer, les autres étant moins bons que leur(s) évolution(s) ils ne sont
 donc pas utilisés en stratégie.
 
 \begin{figure}[h]
@@ -621,7 +621,7 @@ clusters, pour comprendre les changements de design (= choix des archétypes
 dominants) au fil des générations. Pour cela, nous avons calculé pour chaque
 génération la part du nombre de Pokémon dans chaque cluster. Les résultats sont
 affichés Figure \ref{fig:annexe1}, par ordre croissant de génération (de la plus
-ancienne à la plus récente.
+ancienne à la plus récente).
 
 
 
@@ -732,36 +732,36 @@ grandement à accomplir leur rôle.
 
 Nous avons pu voir que le powercreep existe bel et bien dans les jeux Pokémon.
 Cependant, il ne s'agit pas d'une simple évolution à la hausse des statistques
-des pokémons (comme peut le faire par exemple le jeu de carte à jouer Pokémon
+des Pokémons (comme peut le faire par exemple le jeu de carte à jouer Pokémon
 TCG, pour lequel le powercreep est un fort argument marketing). Il n'est
-également pas évident que les pokémons sont de plus en plus spécialisés, comme
+également pas évident que les Pokémons sont de plus en plus spécialisés, comme
 nous avons pu le voir lors de l'étude de la variante inter-statistiques.
 
 En revanche, certains choix de design comme peuvent expliquer plus subtilement
 les changements de viabilité. L'ACP a permis de montrer que les statistiques,
 sans être corréler entre elles, suivent tout de même certaines tendances. L'ACM
 sur les capacités a pu montrer que le choix d'un type conditionne certains
-pokémons au-delà des simples résistances et faiblesses du type via la notion de
+Pokémons au-delà des simples résistances et faiblesses du type via la notion de
 coverage.
 
-Enfin, nous avons vu qu'une partie de la viabilité des pokémons peut s'expliquer
+Enfin, nous avons vu qu'une partie de la viabilité des Pokémons peut s'expliquer
 par les choix d'archétypes qui leur sont faits et que nous avons pu déterminer
 lors du clustering : certains archétypes particulièrement efficaces sont
-également particulièrement peuplés par des pokémons des dernières générations
-Ainsi, la viabilité des pokémons plus récent est en partie due à leur
+également particulièrement peuplés par des Pokémons des dernières générations.
+Ainsi, la viabilité des Pokémons plus récents est en partie due à leur
 appartenance à de meilleurs archétypes.
 
-D'autres facteurs qui ne rentraient pas dans le cadre de notre étude pourraient expliquer la viabilité des pokémons.
+D'autres facteurs qui ne rentraient pas dans le cadre de notre étude pourraient expliquer la viabilité des Pokémons.
 L'influence des talents n'est pas quantifiable statistiquement, car de trop nombreux talents
-sont uniques à une espèce de pokémon : on ne peut alors pas dissocier la
-viabilité du pokémon à celle du talent. C'est pourtant une partie importante de
-la viabilité de certains pokémons (Kingambit, Gholdengo...). De même, les objets
+sont uniques à une espèce de Pokémon : on ne peut alors pas dissocier la
+viabilité du Pokémon à celle du talent. C'est pourtant une partie importante de
+la viabilité de certains Pokémons (Kingambit, Gholdengo...). De même, les objets
 n'ont pas été pris en compte : ceux-ci sont utilisables par n'importe quels
-pokémons, mais certains en bénéficient plus que d'autres. Si l'introduction de
-nouveaux objets influants est assez rare (raison pour laquel nous les avons exclu
+Pokémons, mais certains en bénéficient plus que d'autres. Si l'introduction de
+nouveaux objets influents est assez rare (raison pour laquelle nous les avons exclu
 de notre étude), l'objet \textit{Grosses Bottes} en génération 8 a grandement
-modifié la viabilité de certains pokémons et mériterait à lui seul une étude
-similaire à celle-ci. Enfin, la notion de \textit{metagame} n'a pas été prise en compte : un pokémon peut être fort car il est une bonne réponse à d'autres pokémons (comme Great Tusk). Il y a donc des facteurs extérieurs aux pokémons eux-mêmes qui influent sur leur viabilité.
+modifié la viabilité de certains Pokémons et mériterait à lui seul une étude
+similaire à celle-ci. Enfin, la notion de \textit{metagame} n'a pas été prise en compte : un Pokémon peut être fort car il est une bonne réponse à d'autres Pokémons (comme Great Tusk). Il y a donc des facteurs extérieurs aux Pokémons eux-mêmes qui influent sur leur viabilité.
 \newpage
 \section{Annexe}
 
