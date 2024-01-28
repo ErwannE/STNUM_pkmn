@@ -466,8 +466,158 @@ Maintenant que l'on sait que le 3e axe représente surtout les pokémons de type
 On remarque que les capacités les plus utilisées par les pokémons de type Feu sont les attaques de type Feu (infernal parade, flame wheel, raging fury, inferno...). Ce résultat est cohérent avec l'intuition: un pokémon utilise souvent les capacités associées à son type. Cela s'explique notamment par l'amplification de la puissance d'une capacité si elle est utilisée par un pokémon du même type. 
 On remarque que les capacités les moins utilisées par les pokémons de type Feu sont souvent de type Eau (bubble team, aqua ring, water shuriken...). Cela est dû à deux choses: d'une part le fait que les pokémons de type Feu n'ont presque jamais de capacités de type Eau, les deux types étant opposés; d'autre part le fait que les pokémons de type Eau sont représentés négativement par le 3$^{e}$ axe et donc que les capacités associées à ce type y sont également représentées négativement dans la construction de l'axe.
 
-\subsection{Clustering des pokémons}
-Test
+\subsection{Clustering des Pokémons}
+Nous savons que le design des Pokémons n'a pas simplement évolué de sorte à augmenter naïvement le total de statistiques pour les rendre strictement meilleurs que les anciens. Nous pouvons par contre nous demander si les Pokémons n'ont pas des archétypes de statistiques sous lesquels ils pourraient se regrouper, et si tel est le cas, lesquels sont les plus peuplés et les plus utilisés en stratégie (donc les plus forts) en fonction de la génération étudiée. C'est ce qui motive l'utilisation du clustering sur les statistiques.
+
+\subsubsection{Données utilisées et choix des clusters}
+Comme expliqué précédemment, nous allons avoir besoin des données des statistiques des Pokémons et de la génération à laquelle ils appartiennent pour étudier les clusters par génération. Nous n'étudions que les 681 Pokémons ne pouvant pas évoluer, les autres étant moins bons que leurs évolution ils ne sont donc pas utilisés en stratégie.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Clustering/stats_gen_infos.png}
+    \caption{Données utilisées pour le clustering}.
+\end{figure}
+
+Concernant le choix des clusters, nous avons affiché l'histogramme suivant, \texttt{Figure 14}, réalisé par CAH avec la distance de Ward : 
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Clustering/heights_k_clustering_zoomed.png}
+    \caption{Gain d'inertie inter-classes lors du passage de k-1 à k classes ($k_max = 50$)}.
+\end{figure}
+
+Les plus gros sauts de gain sont entre 2 et 6 classes, donc il faudrait stricto sensu prendre entre 2 et 6 clusters. Cependant, les clusters obtenus ne reflétaient que les différences en total de statistiques, ce qui est peu intéressant pour l'étude que nous voulons mener ici. Nous avons donc choisi \textbf{k = 20 clusters}, car c'était le meilleur compromis entre trop peu de clusters et un gros gain d'inertie inter-classes.
+
+Ensuite, il a fallu donner du sens aux clusters obtenus. Pour cela, il suffit de regarder la moyenne de chaque statistique des Pokémon au sein de ce cluster pour déterminer l'archétype auquel peut être associé le cluster (quelles sont les statistiques élevées et faibles). Voici quelques clusters observés (Fig. 15):
+
+
+\begin{figure}[!h]
+    \centering
+
+    \includegraphics[width=0.3\textwidth]{Clustering/stats_cluster/7_Balanced.png}
+    \includegraphics[width=0.3\textwidth]{Clustering/stats_cluster/10_SweepAtk.png}
+    \includegraphics[width=0.3\textwidth]{Clustering/stats_cluster/8_TankSpecial.png}
+
+    \vspace{1em}  % Ajoute un espace vertical entre les lignes
+
+    \includegraphics[width=0.3\textwidth]{Clustering/stats_cluster/9_WallMixed.png}
+    \includegraphics[width=0.3\textwidth]{Clustering/stats_cluster/14_WallbreakAtk.png}
+    \includegraphics[width=0.3\textwidth]{Clustering/stats_cluster/16_UltraWallDef.png}
+
+    \caption{Statistiques moyennes des Pokémon au sein de quelques clusters}
+\end{figure}
+
+
+\begin{enumerate}
+    \item Le premier cluster comprend des Pokémon aux statistiques générales assez équilibrées. On l'appelle donc \textbf{Balanced}.
+    \item Le deuxième cluster comprend des Pokémon aux statistiques de vitesse et d'attaque élevées. Ce sont des Poékmon offensifs : on les appelle \textbf{SweepAtk}.
+    \item Le troisième comprend des Pokémon aux statistiques spéciales élevées : on appelle donc le cluster \textbf{TankSpecial} (un Tank peut aussi bien encaisser qu'asséner des coups puissants, et ici c'est sur les statistiques spéciales).
+    \item Le quatrième cluster possède des statistiques de défense et défense spéciale très élevées :on l'appelle \textbf{WallMixed} (mixed car les 2 défenses sont élevées, Wall car ce sont des Pokémon défensifs)
+    \item Le cinquième cluster possède des Pokémon dont la statistique d'attaque est énorme : ce sont des \textbf{Wallbreak} car ils cassent les Wall.
+    \item Le sixième possède une défense énorme : les Pokémon le composant peuvent être qualifiés de \textbf{WallDef}.
+\end{enumerate}
+
+\subsubsection{Evolution de la répartition des Pokémon au sein des clusters en fonction de leur génération}
+
+Nous allons maintenant nous atteler à la répartition des Pokémon au sein des clusters, pour comprendre les changements de design (= choix des archétypes dominants) au fil des générations.
+Pour cela, nous avons calculé pour chaque génération la part du nombre de Pokémon dans chaque cluster. Les résultats sont affichés Fig.15, par ordre croissant de génération (de la plus ancienne à la plus récente.
+
+\begin{figure}[!h]
+    \centering
+
+    \includegraphics[width=0.45\textwidth]{Clustering/number_poke_gen/gen1.png}
+    \includegraphics[width=0.45\textwidth]{Clustering/number_poke_gen/gen2.png}
+    
+
+    \vspace{1em}  % Ajoute un espace vertical entre les lignes
+
+    \includegraphics[width=0.45\textwidth]{Clustering/number_poke_gen/gen3.png}
+    \includegraphics[width=0.45\textwidth]{Clustering/number_poke_gen/gen4.png}
+    
+
+    \vspace{1em}  % Ajoute un espace vertical entre les lignes
+
+    \includegraphics[width=0.45\textwidth]{Clustering/number_poke_gen/gen5.png}
+    \includegraphics[width=0.45\textwidth]{Clustering/number_poke_gen/gen6.png}
+    
+
+    \vspace{1em}  % Ajoute un espace vertical entre les lignes
+
+    \includegraphics[width=0.45\textwidth]{Clustering/number_poke_gen/gen7.png}
+    \includegraphics[width=0.45\textwidth]{Clustering/number_poke_gen/gen8.png}
+    
+
+    \vspace{1em}  % Ajoute un espace vertical entre les lignes
+
+    \includegraphics[width=0.45\textwidth]{Clustering/number_poke_gen/gen9.png}
+    \caption{Répartition des Pokémon au sein des clusters}
+\end{figure}
+
+\begin{itemize}
+    \item La première génération met l'accent sur les Pokémon Balanced et Sweep. C'est donc une génération assez équilibrée et offensive.
+    \item La seconde introduit beaucoup de Pokémon Balanced et WeakBalanced (Balanced mais avec un total plus faible), l'équilibre des statistiques est une caractéristique forte de cette génération.
+    \item La troisième introduit énormément de WeakBalanced, on continue sur la lignée des Pokémon équilibrés mais plus faibles.
+    
+On peut donc remarquer que les 3 premières générations sont surtout à dominante équilibrée.
+    \item Dès la quatrième génération, on observe une réduction de la proportion de Pokémon équilibrés au profit des TankSpecial, LegendaryOffensive et MixedAttacker. Les Legendary sont des Pokémon au total de statistiques plus élevées, donc on remarque que le total de statistiques augmente et que les Pokémon deviennt de plus en plus orientés sur l'offensive.
+    \item La cinquième génération exacerbe encore plus cette spécialisation offensive avec un fort taux de SweepAtk, 600BSTAtk, TankPhysical.
+    \item La sixième génération est marquée par une explosion du nombre de LegendaryOffensive, SweepSpA et 600BSTAtk. Elle est donc encore plus offensive que jamais, avec en plus le total de statistiques moyen le plus élevé encore à ce jour.
+
+Les générations 4 à 6 sont donc extrêmement offensives.
+    \item La septième génération offre un panel de Pokémon TankPhysical élevé mais aussi un grand taux de Pokémon défensifs (Wall, Tank, Fat). C'est une génération défensive, ce qui permet de compenser la domination des Pokémon offensifs introduits lors des 3 générations précédentes.
+    \item La huitième génération reprend une tendance assez offensive, avec beaucoup de Pokémon Attacker, Wallbreak, Sweep.
+    \item La neuvième génération aussi, mais à dominante un peu plus équilibrée (augmentation de la proportion de Tank).
+\end{itemize}
+
+Les générations 7 à 9 semblent avoir une cohérence : elles introduisent des Pokémon à archétypes toujours plus originaux et en fonction des Pokémon passés pour équilibrer les archétypes.
+
+\subsubsection{Evolution des usages au sein des différents clusters en fonction de la génération}
+
+Nous avons vu quels étaient les choix de design privilégiés en fonction des générations. Nous allons maintenant voir quels sont les plus utilisés/efficaces en stratégie.
+
+\begin{figure}[!h]
+    \centering
+
+    \includegraphics[width=0.45\textwidth]{Clustering/usage_gen/gen1.png}
+    \includegraphics[width=0.45\textwidth]{Clustering/usage_gen/gen2.png}
+    
+
+    \vspace{1em}  % Ajoute un espace vertical entre les lignes
+
+    \includegraphics[width=0.45\textwidth]{Clustering/usage_gen/gen3.png}
+    \includegraphics[width=0.45\textwidth]{Clustering/usage_gen/gen4.png}
+    
+
+    \vspace{1em}  % Ajoute un espace vertical entre les lignes
+
+    \includegraphics[width=0.45\textwidth]{Clustering/usage_gen/gen5.png}
+    \includegraphics[width=0.45\textwidth]{Clustering/usage_gen/gen6.png}
+    
+
+    \vspace{1em}  % Ajoute un espace vertical entre les lignes
+
+    \includegraphics[width=0.45\textwidth]{Clustering/usage_gen/gen7.png}
+    \includegraphics[width=0.45\textwidth]{Clustering/usage_gen/gen8.png}
+    
+
+    \vspace{1em}  % Ajoute un espace vertical entre les lignes
+
+    \includegraphics[width=0.45\textwidth]{Clustering/usage_gen/gen9.png}
+    \caption{Usage moyen d'un Pokémon au sein des clusters selon la génération}
+\end{figure}
+
+\begin{itemize}
+    \item La première génération est marquée par des Pokémon à hautes statistiques orientées sur l'attaque et le special en tant que principaux représentants en stratégie, malgré l'emphase de design sur les statistiques équilibrées. Cela montre que le design équilibré n'est pas le plus viable de nos jours.
+    \item Les meilleurs Pokémon de deuxième, troisième et quatrième génération sont des Pokémon défensifs (Blissey, FatMixedHP, WallDef) avec des statistiques extrêmes (Blissey a la plus haute statistique de HP du jeu). Encore une fois, l'archétype le plus peuplé n'est pas le plus populaire, et seuls les Pokémon extrêmes se démarquent.
+    \item En cinquième génération, on a un usage élevé pour les Pokémon très offensifs (600BSTAtk, MixedSweeper) et très défensifs (BlisseyLike, FatMixedHP). Cependant, la versatilité dans le domaine de prédilection semble être importante (Mixed signifiant posséder autant d'attaque que d'attaque spéciale, ou autant de défense que de défense spéciale). L'imprévisibilité d'un Pokémon, sa capacité à être efficace de manière offensive ou défensive sur le spectre physique ou spécial semble être un facteur important.
+    \item La génération 6 est marquée par une absence quasi totale du paysage stratégique actuel. Cela s'explique car la mécanique principale (donner une nouvelle forme avec des statistiques Legendary à des Pokémon existants) a disparu dans la génération actuelle, donc ses Pokémon les plus puissants n'apparaissent pas dans les données d'usage.
+    \item La 7ème génération voit le taux d'usage des Pokémon WallMixed exploser (défensifs et versatiles) ainsi qu'un haut taux de MixedSweeper (rapide et avec une haute attaque et attaque spéciale). Là encore, la spécialisation dans un domaine (offensif ou défensif) avec de la versatilité semble être importante.
+    \item La génération 8 poursuit la tendance à favoriser les Pokémon versatiles qui excellent dans un des deux domaines, cette fois en favorisant les Pokémon offensifs. On observe aussi une explosion de l'usage moyen des Pokémon en général : encore une preuve du powercreep.
+    \item Enfin, la neuvième génération voit le profil Tank (beaucoup d'attaque et de défense, ou beaucoup d'attaque et de défense spéciale) grimper en flèche. Il semble intéressant d'être capable de frapper fort en encaissant bien les coups, même au détriment de la vitesse (plutôt que simplement frapper vite et fort).
+    
+\end{itemize}
+
+En résumé, nous avons vu que les taux de répartition dans les clusters (donc la "mode" de design associée à la génération) n'est pas corrélée à la viabilité de ces Pokémon. Il faut remplir un rôle spécifique, avec des statistiques spécialisées et optimisées pour remplir ce rôle. C'est pourquoi l'archétype Balanced, très largement peuplé par les Pokémon des premières générations, n'est pas viable dans la génération actuelle et semble avoir été délaissé petit à petit au profit de Pokémon offensifs et défensifs, qu'ils soient lents ou rapides. La popularité de la versatilité dans les générations pourrait remettre en cause notre hypothèse de base de la spécialisation toujours plus pointue des Pokémon pour qu'ils deviennent plus puissants. Cependant, les statistiques ne font pas tout : les Pokémon les plus joués ne le sont pas que grâce à leurs statistiques, mais leurs capacités, talents et types pèsent extrêmement lourd dans la balance. On peut penser à Kingambit et Great Tusk, qui sont 2 des Pokémon les plus joués actuellement et qui ont un profil Tank, mais qui le sont surtout pour leurs capacités (et leur talent pour Kingambit) qui les aide grandement à accomplir leur rôle.
 
 \section{Analyse des données}
 
