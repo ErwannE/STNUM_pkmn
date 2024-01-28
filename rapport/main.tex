@@ -428,26 +428,30 @@ habitudes de design :
     statistiques sauf en vitesse (qui est quasi nulle) : la composante selon ce
     vecteur des pokémons dit "légendaires", qui ont de très hautes statistique
     en général, sauf leur vitesse qui est souvent moyenne, doit être grande et
-    le nombre important de sorte de pokémons légendaires aux statistiques similaires justifie la forme de ce vecteur.
+    le nombre important de sorte de pokémons légendaires aux statistiques
+    similaires justifie la forme de ce vecteur.
 \end{itemize}
 \subsubsection{Réduction de la dimentionnalité sur les types et les capacités}
-Les pokémons ne peuvent pas apprendre les mêmes capacités dans les jeux vidéos
-pokémon. L'objectif de cette partie est d'étudier quelles capacités les pokémons
-d'un type de pokémon peuvent apprendre. L'intérêt de cette partie est double:  
+Tous les pokémons ne peuvent pas apprendre les mêmes capacités dans les jeux
+vidéos Pokémon. L'objectif de cette partie est d'étudier quelles capacités les
+pokémons d'un type de pokémon peuvent apprendre. L'intérêt de cette partie est
+double:   
 \begin{itemize}
     \item 
     Tout d'abord, il s'agit de confirmer l'intuition que les pokémons d'un type
     peuvent apprendre des capacités associées au même type. 
-    \item Ensuite, nous souhaitons visualiser le principe de coverage: à priori,
-    si un pokémon de type Feu doit en affronter un autre, il ne peut pas
-    utiliser de capacités de type Feu pour vaincre de manière efficace son
-    adversaire. Il vaut mieux qu'il possède des capacités efficaces pour
-    attaquer un pokémon de type Feu: les capacités du type Eau sont un bon
-    exemple. Cependant, selon le type de pokémon étudié, il est possible que le
-    design des pokémons ait été fait de sorte qu'un type possède une mauvaise
-    coverage. 
+    \item Ensuite, nous souhaitons visualiser le principe de \textit{coverage}
+    (ou \textit{couverture d'option}): à priori, si un pokémon de type Feu doit
+    en affronter un autre, il ne peut pas utiliser de capacités de type Feu pour
+    vaincre de manière efficace son adversaire car les capacités de type Feu
+    sont résistées par les pokémons ayant le type Feu (voir la
+    table~\ref{fig:tabletype}). Il vaut mieux qu'il possède des capacités
+    efficaces pour attaquer un pokémon de type Feu: les capacités du type Eau
+    sont un bon exemple, on dira alors que le type Eau est un bon
+    \textit{coverage} au type Feu. Cependant, selon le type de pokémon étudié,
+    il est possible que des choix de design implique qu'un type possède une
+    mauvaise coverage. 
 \end{itemize}
-
 Deux jeux de données binaires sont utiles ici: un premier qui contient les
 pokémons en entrée et les types des pokémons en colonne, un second qui contient
 les pokémons en entrée et les capacités qui sont pourraient ou non être apprises
@@ -456,7 +460,7 @@ pokémons selon leur type afin de raisonner type par type dans l'analyse du
 second jeu de données.
 
 Le second jeu de données contient 592 colonnes (toutes les capacités des jeux
-vidéos pokémon). Cette dimension étant importante, nous avons choisi de la
+vidéos Pokémon). Cette dimension étant importante, nous avons choisi de la
 réduire grâce à l'analyse des correspondances multiples (ACM). Nous avons choisi
 cette méthode puisque les données étaient binaires donc assimilables à des
 données qualitatives dont les seules modalités sont 0 et 1. 
@@ -465,6 +469,7 @@ Afin de choisir la nouvelle dimension, nous utilisons le diagramme d'éboulis de
 valeurs propres. Etant donné que le jeu de données utilisé contient 291 entrées
 (pokémons) et 592 colonnes, la dimension maximale du nouvel espace ne peut
 dépasser 291. 
+\newpage
 \begin{figure}[!h]
     \centering
     \includegraphics[width=0.5\textwidth]{eboulis_MCA.png}
@@ -496,12 +501,12 @@ On remarque que les pokémons de type Feu ont une forte composante selon le
 représentés sur cet axe. Ce résultat est cohérent avec le design du jeu qui veut
 que les pokémons de type Feau et Eau soient opposés. 
 
-Maintenant que l'on sait que le 3e axe représente surtout les pokémons de type
-Feu, on peut voir quelles capacités ont permis de construire ce 3e axe. Cela
-nous permet de trouver quelles capacités sont utilisées par les pokémons de type
-Feu. Le résultat découle de la matrice des contributions. On peut par exemple
-afficher les 30 capacités qui ont le plus contribué à construire le 3$^{e}$ axe
-et les 30 capacités qui y on le moins contribué:
+Maintenant que l'on sait que le 3$^{e}$ axe représente surtout les pokémons de
+type Feu, on peut voir quelles capacités ont permis de construire ce 3$^{e}$
+axe. Cela nous permet de trouver quelles capacités sont utilisées par les
+pokémons de type Feu. Le résultat découle de la matrice des contributions. On
+peut par exemple afficher les 30 capacités qui ont le plus contribué à
+construire le 3$^{e}$ axe et les 30 capacités qui y on le moins contribué:
 \begin{figure}[!h]
     \centering
     \includegraphics[width=0.4\textwidth]{bottom_attaques_MCA.png}
@@ -513,16 +518,17 @@ et les 30 capacités qui y on le moins contribué:
 
 On remarque que les capacités les plus utilisées par les pokémons de type Feu
 sont les attaques de type Feu (infernal parade, flame wheel, raging fury,
-inferno...). Ce résultat est cohérent avec l'intuition: un pokémon utilise
-souvent les capacités associées à son type. Cela s'explique notamment par
-l'amplification de la puissance d'une capacité si elle est utilisée par un
-pokémon du même type. On remarque que les capacités les moins utilisées par les
-pokémons de type Feu sont souvent de type Eau (bubble team, aqua ring, water
-shuriken...). Cela est dû à deux choses: d'une part le fait que les pokémons de
-type Feu n'ont presque jamais de capacités de type Eau, les deux types étant
-opposés; d'autre part le fait que les pokémons de type Eau sont représentés
-négativement par le 3$^{e}$ axe et donc que les capacités associées à ce type y
-sont également représentées négativement dans la construction de l'axe.
+inferno...). Ce résultat est cohérent avec l'intuition: un pokémon a souvent
+accès aux capacités de son type. Cela s'explique notamment par l'amplification
+de la puissance par 50\% d'une capacité si elle est utilisée par un pokémon du
+même type (mécanique appelée \textit{Same Type Attack Bonus} ou \textit{STAB}).
+On remarque que les capacités les moins utilisées par les pokémons de type Feu
+sont souvent de type Eau (bubble team, aqua ring, water shuriken...). Cela est
+dû à deux choses: d'une part le fait que les pokémons de type Feu n'ont presque
+jamais de capacités de type Eau, les deux types étant opposés; d'autre part le
+fait que les pokémons de type Eau sont représentés négativement par le 3$^{e}$
+axe et donc que les capacités associées à ce type y sont également représentées
+négativement dans la construction de l'axe.
 
 \subsection{Clustering des Pokémons}
 Nous savons que le design des Pokémons n'a pas simplement évolué de sorte à
@@ -536,7 +542,7 @@ utilisés en stratégie (donc les plus forts) en fonction de la génération
 \subsubsection{Données utilisées et choix des clusters}
 Comme expliqué précédemment, nous allons avoir besoin des données des
 statistiques des Pokémons et de la génération à laquelle ils appartiennent pour
-étudier les clusters par génération. Nous n'étudions que les 681 Pokémons ne
+étudier les clusters par génération. Nous n'étudions que les 681 pokémons ne
 pouvant pas évoluer, les autres étant moins bons que leurs évolution ils ne sont
 donc pas utilisés en stratégie.
 
@@ -557,11 +563,11 @@ Concernant le choix des clusters, nous avons affiché l'histogramme suivant,
 \end{figure}
 
 Les plus gros sauts de gain sont entre 2 et 6 classes, donc il faudrait stricto
-sensu prendre entre 2 et 6 clusters. Cependant, les clusters obtenus ne
-reflétaient que les différences en total de statistiques, ce qui est peu
-intéressant pour l'étude que nous voulons mener ici. Nous avons donc choisi
-\textbf{k = 20 clusters}, car c'était le meilleur compromis entre trop peu de
-clusters et un gros gain d'inertie inter-classes.
+sensu prendre 2 ou 6 clusters. Cependant, les clusters obtenus ne reflétaient
+que les différences en total de statistiques, ce qui est peu intéressant pour
+l'étude que nous voulons mener ici. Nous avons donc choisi \textbf{k = 20
+clusters}, car c'était le meilleur compromis entre trop peu de clusters et un
+gros gain d'inertie inter-classes.
 
 Ensuite, il a fallu donner du sens aux clusters obtenus. Pour cela, il suffit de
 regarder la moyenne de chaque statistique des Pokémon au sein de ce cluster pour
@@ -607,43 +613,17 @@ statistiques élevées et faibles). Voici quelques clusters observés (Fig. 15):
 
 \subsubsection{Evolution de la répartition des Pokémon au sein des clusters en fonction de leur génération}
 
+N.B. : Les figures de cette partie sont trouvables dans l'annexe en fin de
+document.
+
 Nous allons maintenant nous atteler à la répartition des Pokémon au sein des
 clusters, pour comprendre les changements de design (= choix des archétypes
 dominants) au fil des générations. Pour cela, nous avons calculé pour chaque
 génération la part du nombre de Pokémon dans chaque cluster. Les résultats sont
-affichés Fig.15, par ordre croissant de génération (de la plus ancienne à la
-plus récente.
+affichés Figure \ref{fig:annexe1}, par ordre croissant de génération (de la plus
+ancienne à la plus récente.
 
-\begin{figure}[!h]
-    \centering
 
-    \includegraphics[width=0.45\textwidth]{Clustering/number_poke_gen/gen1.png}
-    \includegraphics[width=0.45\textwidth]{Clustering/number_poke_gen/gen2.png}
-    
-
-    \vspace{1em}  % Ajoute un espace vertical entre les lignes
-
-    \includegraphics[width=0.45\textwidth]{Clustering/number_poke_gen/gen3.png}
-    \includegraphics[width=0.45\textwidth]{Clustering/number_poke_gen/gen4.png}
-    
-
-    \vspace{1em}  % Ajoute un espace vertical entre les lignes
-
-    \includegraphics[width=0.45\textwidth]{Clustering/number_poke_gen/gen5.png}
-    \includegraphics[width=0.45\textwidth]{Clustering/number_poke_gen/gen6.png}
-    
-
-    \vspace{1em}  % Ajoute un espace vertical entre les lignes
-
-    \includegraphics[width=0.45\textwidth]{Clustering/number_poke_gen/gen7.png}
-    \includegraphics[width=0.45\textwidth]{Clustering/number_poke_gen/gen8.png}
-    
-
-    \vspace{1em}  % Ajoute un espace vertical entre les lignes
-
-    \includegraphics[width=0.45\textwidth]{Clustering/number_poke_gen/gen9.png}
-    \caption{Répartition des Pokémon au sein des clusters}
-\end{figure}
 
 \begin{itemize}
     \item La première génération met l'accent sur les Pokémon Balanced et Sweep.
@@ -689,36 +669,6 @@ Nous avons vu quels étaient les choix de design privilégiés en fonction des
 générations. Nous allons maintenant voir quels sont les plus utilisés/efficaces
 en stratégie.
 
-\begin{figure}[!h]
-    \centering
-
-    \includegraphics[width=0.45\textwidth]{Clustering/usage_gen/gen1.png}
-    \includegraphics[width=0.45\textwidth]{Clustering/usage_gen/gen2.png}
-    
-
-    \vspace{1em}  % Ajoute un espace vertical entre les lignes
-
-    \includegraphics[width=0.45\textwidth]{Clustering/usage_gen/gen3.png}
-    \includegraphics[width=0.45\textwidth]{Clustering/usage_gen/gen4.png}
-    
-
-    \vspace{1em}  % Ajoute un espace vertical entre les lignes
-
-    \includegraphics[width=0.45\textwidth]{Clustering/usage_gen/gen5.png}
-    \includegraphics[width=0.45\textwidth]{Clustering/usage_gen/gen6.png}
-    
-
-    \vspace{1em}  % Ajoute un espace vertical entre les lignes
-
-    \includegraphics[width=0.45\textwidth]{Clustering/usage_gen/gen7.png}
-    \includegraphics[width=0.45\textwidth]{Clustering/usage_gen/gen8.png}
-    
-
-    \vspace{1em}  % Ajoute un espace vertical entre les lignes
-
-    \includegraphics[width=0.45\textwidth]{Clustering/usage_gen/gen9.png}
-    \caption{Usage moyen d'un Pokémon au sein des clusters selon la génération}
-\end{figure}
 
 \begin{itemize}
     \item La première génération est marquée par des Pokémon à hautes
@@ -778,94 +728,105 @@ Pokémon les plus joués actuellement et qui ont un profil Tank, mais qui le son
 surtout pour leurs capacités (et leur talent pour Kingambit) qui les aide
 grandement à accomplir leur rôle.
 
-\section{Analyse des données}
+\section{Conclusion et pistes d'amélioration}
 
-Notre projet consiste en la caractérisation du phénomnène de powercreep. Tout
-d'abord, il faut vérifier qu'il y a réellement un phénomène de powercreep :
-c'est à dire que les pokémons des générations récentes sont plus joués (car plus
-fort) que les pokémons des générations précédentes. Une façon simple de vérifier
-cela est de regarder les statistiques d'usages de chaque pokémon. Il est alors
-facile de constater le powercreep : les 4 pokémons les plus utilisés proviennent
-de la $9^{e}$ génération, et parmis les 10 pokémons les plus utilisés en
-\textit{OU}, 6 proviennent de la $9^{e}$ génération, 3 proviennent de la $8^{e}$
-génération et 1 provient de la première génération. Les générations ajoutant un
-peu près toutes le même nombre de pokémon, on constate que les nouveaux pokémons
-sont souvent plus viables que les anciens.
+Nous avons pu voir que le powercreep existe bel et bien dans les jeux Pokémon.
+Cependant, il ne s'agit pas d'une simple évolution à la hausse des statistques
+des pokémons (comme peut le faire par exemple le jeu de carte à jouer Pokémon
+TCG, pour lequel le powercreep est un fort argument marketing). Il n'est
+également pas évident que les pokémons sont de plus en plus spécialisés, comme
+nous avons pu le voir lors de l'étude de la variante inter-statistiques.
 
+En revanche, certains choix de design comme peuvent expliquer plus subtilement
+les changements de viabilité. L'ACP a permis de montrer que les statistiques,
+sans être corréler entre elles, suivent tout de même certaines tendances. L'ACM
+sur les capacités a pu montrer que le choix d'un type conditionne certains
+pokémons au-delà des simples résistances et faiblesses du type via la notion de
+coverage.
 
-Ci-dessous se trouve l'évolutions des moyennes sur les générations d'aparition
-des statistiques des pokémons, ainsi que leur total de statistique :
+Enfin, nous avons vu qu'une partie de la viabilité des pokémons peut s'expliquer
+par les choix d'archétypes qui leur sont faits et que nous avons pu déterminer
+lors du clustering : certains archétypes particulièrement efficaces sont
+également particulièrement peuplés par des pokémons des dernières générations
+Ainsi, la viabilité des pokémons plus récent est en partie due à leur
+appartenance à de meilleurs archétypes.
+
+D'autres facteurs qui ne rentraient pas dans le cadre de notre étude pourraient expliquer la viabilité des pokémons.
+L'influence des talents n'est pas quantifiable statistiquement, car de trop nombreux talents
+sont uniques à une espèce de pokémon : on ne peut alors pas dissocier la
+viabilité du pokémon à celle du talent. C'est pourtant une partie importante de
+la viabilité de certains pokémons (Kingambit, Gholdengo...). De même, les objets
+n'ont pas été pris en compte : ceux-ci sont utilisables par n'importe quels
+pokémons, mais certains en bénéficient plus que d'autres. Si l'introduction de
+nouveaux objets influants est assez rare (raison pour laquel nous les avons exclu
+de notre étude), l'objet \textit{Grosses Bottes} en génération 8 a grandement
+modifié la viabilité de certains pokémons et mériterait à lui seul une étude
+similaire à celle-ci. Enfin, la notion de \textit{metagame} n'a pas été prise en compte : un pokémon peut être fort car il est une bonne réponse à d'autres pokémons (comme Great Tusk). Il y a donc des facteurs extérieurs aux pokémons eux-mêmes qui influent sur leur viabilité.
+\newpage
+\section{Annexe}
 
 \begin{figure}[!h]
     \centering
-    \includegraphics[width=0.95\textwidth]{Image/Total_avg.png}
-    \caption{Évolution du total de statistique moyen en fonction de la
-    génération}.
-    \label{fig:image3}
-\end{figure}
 
-\begin{figure}[!h]
-    \centering
-
-    \includegraphics[width=0.3\textwidth]{Image/hp_avg.png}
-    \includegraphics[width=0.3\textwidth]{Image/atk_avg.png}
-    \includegraphics[width=0.3\textwidth]{Image/def_avg.png}
+    \includegraphics[width=0.4\textwidth]{Clustering/number_poke_gen/gen1.png}
+    \includegraphics[width=0.4\textwidth]{Clustering/number_poke_gen/gen2.png}
+    
 
     \vspace{1em}  % Ajoute un espace vertical entre les lignes
 
-    \includegraphics[width=0.3\textwidth]{Image/spatk_avg.png}
-    \includegraphics[width=0.3\textwidth]{Image/spdef_avg.png}
-    \includegraphics[width=0.3\textwidth]{Image/speed_avg_2.png}
+    \includegraphics[width=0.4\textwidth]{Clustering/number_poke_gen/gen3.png}
+    \includegraphics[width=0.4\textwidth]{Clustering/number_poke_gen/gen4.png}
+    
 
-    \caption{Évolution des moyennes des autres statistiques en fonction de la génération}
+    \vspace{1em}  % Ajoute un espace vertical entre les lignes
+
+    \includegraphics[width=0.4\textwidth]{Clustering/number_poke_gen/gen5.png}
+    \includegraphics[width=0.4\textwidth]{Clustering/number_poke_gen/gen6.png}
+    
+
+    \vspace{1em}  % Ajoute un espace vertical entre les lignes
+
+    \includegraphics[width=0.4\textwidth]{Clustering/number_poke_gen/gen7.png}
+    \includegraphics[width=0.4\textwidth]{Clustering/number_poke_gen/gen8.png}
+    
+
+    \vspace{1em}  % Ajoute un espace vertical entre les lignes
+
+    \includegraphics[width=0.4\textwidth]{Clustering/number_poke_gen/gen9.png}
+    \caption{Répartition des Pokémon au sein des clusters}
+    \label{fig:annexe1} % Add a proper reference to the \label command
 \end{figure}
-\newpage
-On peut voir que le total de statistique moyen des pokémons, s'il évolue
-positivement avec les générations, n'explique pas seul la prévalence de certains
-pokémons, en particulier pour la génération 9 (qui a un total de statistique
-moyen inférieur aux générations précédentes).
 
-La suite de notre étude explorera, entre autre, les pistes suivantes :
-\begin{itemize}
-    \item Impact du movepool sur la viabilité : Quelle est influence de l'accès
-    à certaines capacités sur la viabilité des pokémons ? Dans quelle mesure le
-    powercreep s'illustre dans l'évolution des movepools ?
-    \item Impact du talent sur la viabilité : Quelle est influence de l'accès à
-    certains talents sur la viabilité des pokémons ? Dans quelle mesure le
-    powercreep s'illustre dans l'évolution des talents ?
-    \item Répartition de statistique : Dans la mesure où chaque pokémon joue un
-    rôle spécifique dans une équipe, toutes les statistiques d'un pokémon n'ont
-    pas la même importance (un pokémon offensif cherchera à agir en premier et
-    infliger beaucoup de dégâts, ses statistiques défensives auront donc moins
-    d'importance que ses statistiques offensives). Dans quelle mesure les
-    répartitions de statistiques équilibrées (dite \textit{fat}) des premières
-    générations ont laissé place à des répartitions plus spécialisées ?
-    \item Choix des types : Y a-t-il une évolution dans les types des nouveaux
-    pokémons ? Celle-ci influt-elle sur la viabilité ?
-\end{itemize}
+\begin{figure}[!h]
+    \centering
 
-Enfin, nous pourrons nous intéresser aux limites de notre raisonnement (notion
-de \textit{metagame}, mécaniques spécifiques à certaines générations, objets...)
-et chercher à construire un outil prédictif pour créer de nouveaux pokémons à
-partir de statistiques, de types...
+    \includegraphics[width=0.45\textwidth]{Clustering/usage_gen/gen1.png}
+    \includegraphics[width=0.45\textwidth]{Clustering/usage_gen/gen2.png}
+    
 
+    \vspace{1em}  % Ajoute un espace vertical entre les lignes
 
-\section{TRAVAIL A FAIRE}
+    \includegraphics[width=0.45\textwidth]{Clustering/usage_gen/gen3.png}
+    \includegraphics[width=0.45\textwidth]{Clustering/usage_gen/gen4.png}
+    
 
-\begin{itemize}
-    \item Clustering sur les pokémons par rapport à leurs statistiques. On
-    calcul l'usage moyen par Cluster, calculer l'appartenance des poké OU aux
-    cluster
-    \item Réduction de dimension sur les attaques : voir quels types d'attaques
-    vont bien ensemble
-    \item Réduction de dimension sur les stats et les types : montrer que c'est
-    pas très utile
-    \item Correlation statistiques-usage : pas que les statistiques qui influent
-    sur la viabilité
-    \item Evolution moyenne et variance par génération : Montrer qu'il y a une
-    spécialisation
-\end{itemize}
-\section{Annexe}
+    \vspace{1em}  % Ajoute un espace vertical entre les lignes
+
+    \includegraphics[width=0.45\textwidth]{Clustering/usage_gen/gen5.png}
+    \includegraphics[width=0.45\textwidth]{Clustering/usage_gen/gen6.png}
+    
+
+    \vspace{1em}  % Ajoute un espace vertical entre les lignes
+
+    \includegraphics[width=0.45\textwidth]{Clustering/usage_gen/gen7.png}
+    \includegraphics[width=0.45\textwidth]{Clustering/usage_gen/gen8.png}
+    
+
+    \vspace{1em}  % Ajoute un espace vertical entre les lignes
+
+    \includegraphics[width=0.45\textwidth]{Clustering/usage_gen/gen9.png}
+    \caption*{Annexe 2 : Usage moyen d'un Pokémon au sein des clusters selon la génération}
+\end{figure}
 
 
 \end{document}
